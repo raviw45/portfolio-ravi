@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "../common/button";
 import { motion } from "framer-motion";
 import { fadeUpVariant } from "@/config/framer";
+import { useSendMail } from "@/utils/useSendMail";
 
 const ContactMe: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const ContactMe: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const { sendMail, loading, error } = useSendMail();
 
   const validate = () => {
     const newErrors = { fullName: "", subject: "", description: "" };
@@ -48,10 +50,11 @@ const ContactMe: React.FC = () => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       console.log("Form submitted", formData);
+      await sendMail(formData);
       setSubmitted(true);
       setFormData({ fullName: "", subject: "", description: "" });
 
@@ -124,15 +127,31 @@ const ContactMe: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeUpVariant}
           custom={1}
+          className="relative"
         >
           {submitted && (
             <motion.div
-              className="mb-6 p-4 text-green-700 bg-green-100 rounded-md border border-green-300 text-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
             >
-              Thank you for reaching out! I will get back to you soon.
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md border border-green-500 text-center relative">
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-white"
+                  aria-label="Close"
+                >
+                  &times;
+                </button>
+                <h3 className="text-xl font-semibold text-green-600 mb-2">
+                  Message Sent Successfully!
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300">
+                  Thank you for reaching out. I&apos;ll get back to you soon!
+                </p>
+              </div>
             </motion.div>
           )}
 
@@ -214,10 +233,12 @@ const ContactMe: React.FC = () => {
 
             <Button
               type="submit"
+              disabled={loading}
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md py-3 transition-colors"
             >
-              Send Message
+              {loading ? "Sending..." : " Send Message"}
             </Button>
+            {error && <p className="text-red-500">{error}</p>}
           </form>
         </motion.div>
       </div>
