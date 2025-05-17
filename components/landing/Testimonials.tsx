@@ -1,35 +1,9 @@
 "use client";
 
+import { testimonials } from "@/data/Testimonial";
 import React from "react";
 import { FaQuoteLeft } from "react-icons/fa";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-
-const testimonials = [
-  {
-    name: "Alice Johnson",
-    role: "Frontend Developer",
-    message:
-      "Working with this team was a fantastic experience. Highly professional and timely.",
-  },
-  {
-    name: "Bob Smith",
-    role: "Project Manager",
-    message:
-      "Delivered beyond expectations. Communication and technical skills were top-notch!",
-  },
-  {
-    name: "Carla Gomez",
-    role: "UX Designer",
-    message:
-      "Creative, collaborative, and always user-focused. Loved the process and the product.",
-  },
-  {
-    name: "David Lee",
-    role: "DevOps Engineer",
-    message:
-      "Efficient and reliable. The deployment pipeline was smooth and well-documented.",
-  },
-];
 
 const Testimonials: React.FC = () => {
   const [current, setCurrent] = React.useState(0);
@@ -49,7 +23,7 @@ const Testimonials: React.FC = () => {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className=""
+      className="py-20"
     >
       <h2 className="text-center text-3xl sm:text-4xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-300 dark:to-purple-400">
         Testimonials

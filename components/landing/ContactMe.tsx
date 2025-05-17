@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Button from "../common/button";
+import { motion } from "framer-motion";
+import { fadeUpVariant } from "@/config/framer";
 
 const ContactMe: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -49,24 +51,34 @@ const ContactMe: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // Handle form submission here
       console.log("Form submitted", formData);
       setSubmitted(true);
       setFormData({ fullName: "", subject: "", description: "" });
+
+      // Optionally hide the message after some time:
+      setTimeout(() => setSubmitted(false), 5000);
     }
   };
 
   return (
     <section
+      id="contact"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="py-16 "
+      className="py-24 "
     >
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
         {/* Left Info Section */}
-        <div className="text-center md:text-left space-y-6">
+        <motion.div
+          className="text-center md:text-left space-y-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUpVariant}
+          custom={0}
+        >
           <h2 className="text-5xl font-extrabold text-indigo-600 dark:text-indigo-300">
             Let&apos;s Connect!
           </h2>
@@ -103,14 +115,25 @@ const ContactMe: React.FC = () => {
               </a>
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Form Section */}
-        <div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUpVariant}
+          custom={1}
+        >
           {submitted && (
-            <div className="mb-6 p-4 text-green-700 bg-green-100 rounded-md border border-green-300 text-center animate-fadeIn">
+            <motion.div
+              className="mb-6 p-4 text-green-700 bg-green-100 rounded-md border border-green-300 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               Thank you for reaching out! I will get back to you soon.
-            </div>
+            </motion.div>
           )}
 
           <form
@@ -196,7 +219,7 @@ const ContactMe: React.FC = () => {
               Send Message
             </Button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

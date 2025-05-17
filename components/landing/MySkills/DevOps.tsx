@@ -102,7 +102,6 @@ const DevOps: React.FC = () => {
                 top: y - 56,
               }}
             >
-              {/* Add `group` here so tooltip can use group-hover */}
               <div
                 className="relative rounded-full p-5 shadow-lg cursor-pointer
                   flex items-center justify-center text-4xl

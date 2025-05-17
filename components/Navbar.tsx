@@ -2,40 +2,58 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggler from "./theme-toggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const linkClickedRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+      const currentScrollY = window.scrollY;
+
+      if (linkClickedRef.current) {
+        linkClickedRef.current = false;
+        return;
       }
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navLinks = ["Home", "About", "Experience", "Blogs", "Contact"];
 
+  const handleLinkClick = () => {
+    setIsOpen(false);
+    setShowNavbar(false);
+    linkClickedRef.current = true;
+  };
+
   return (
     <header
+      className={`w-full fixed top-0 left-0 z-50 backdrop-blur-lg transition-all duration-300 ${
+        showNavbar ? "translate-y-0 shadow-md" : "-translate-y-full"
+      }`}
       style={{
-        backgroundColor: scrolled
-          ? "var(--background)"
-          : "rgba(var(--background-rgb), 0.4)",
+        backgroundColor:
+          lastScrollY > 20
+            ? "var(--background)"
+            : "rgba(var(--background-rgb), 0.4)",
         color: "var(--foreground)",
       }}
-      className={`w-full fixed top-0 left-0 z-50 backdrop-blur-lg transition-all duration-300 ${
-        scrolled ? "shadow-md" : "shadow-none"
-      }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
         {/* Logo */}
@@ -56,6 +74,7 @@ const Navbar = () => {
               key={item}
               href={`#${item.toLowerCase()}`}
               className="relative group cursor-pointer"
+              onClick={handleLinkClick}
             >
               {item}
               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:w-full transition-all duration-300" />
@@ -63,13 +82,9 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Mobile toggler */}
+        {/* Theme toggle and mobile toggler */}
         <div className="flex items-center gap-4 md:gap-0 order-2 md:order-3">
-          <div>
-            <ThemeToggler />
-          </div>
-
-          {/* Mobile Menu Toggle */}
+          <ThemeToggler />
           <button
             className="md:hidden text-gray-700 dark:text-gray-100"
             onClick={() => setIsOpen(!isOpen)}
@@ -89,7 +104,7 @@ const Navbar = () => {
                 key={item}
                 href={`#${item.toLowerCase()}`}
                 className="hover:text-indigo-500 transition-colors"
-                onClick={() => setIsOpen(false)} // Close menu on link click
+                onClick={handleLinkClick}
               >
                 {item}
               </Link>

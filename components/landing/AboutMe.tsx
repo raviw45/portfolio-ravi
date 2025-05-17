@@ -4,19 +4,29 @@ import React from "react";
 import Image from "next/image";
 import SocialIcons from "../common/SocialIcons";
 import AnimatedBlog from "../common/animated-blob";
+import { motion } from "framer-motion";
+import { fadeUpVariant } from "@/config/framer";
 
 const AboutMe = () => {
   return (
     <section
+      id="about"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="py-10 overflow-hidden"
+      className="py-20 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* Image Section */}
-        <div className="flex justify-center">
+        <motion.div
+          className="flex justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUpVariant}
+          custom={0}
+        >
           <div className="relative z-20 w-64 h-64 md:h-96 md:w-96 rounded-full overflow-hidden shadow-2xl bg-gradient-to-tr from-indigo-400 via-purple-500 to-pink-500 p-1 animate-float">
             <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
               <Image
@@ -28,10 +38,16 @@ const AboutMe = () => {
             </div>
           </div>
           <AnimatedBlog />
-        </div>
+        </motion.div>
 
         {/* Info Section */}
-        <div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUpVariant}
+          custom={1}
+        >
           <h2 className="text-4xl font-bold text-indigo-600 dark:text-indigo-300 mb-4">
             About Me
           </h2>
@@ -71,7 +87,7 @@ const AboutMe = () => {
           <div className="py-4">
             <SocialIcons />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
