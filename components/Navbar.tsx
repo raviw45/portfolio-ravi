@@ -78,6 +78,7 @@ const Navbar = () => {
         <div className="order-1 flex items-center gap-2">
           <Image
             src="/image/logo.png"
+            title="logo"
             alt="Logo"
             width={50}
             height={50}

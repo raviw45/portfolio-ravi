@@ -33,6 +33,7 @@ const AboutMe = () => {
               <div className="w-64 h-64 md:h-96 md:w-96 rounded-full overflow-hidden bg-white dark:bg-gray-900">
                 <Image
                   src="/image/profile.jpg"
+                  title="Ravikant Waghmare"
                   alt="Ravikant Waghmare"
                   fill
                   className="object-contain w-full h-full rounded-full transform hover:scale-105 transition-transform duration-500"

@@ -47,6 +47,7 @@ const ProjectCard = ({
         {/* Image with hover opacity effect */}
         <Image
           src={images[current]}
+          title={`${title}`}
           alt={`${title} screenshot ${current + 1}`}
           fill
           className="object-cover transition-opacity duration-300 hover:opacity-60"

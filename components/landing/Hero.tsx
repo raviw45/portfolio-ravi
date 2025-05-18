@@ -95,9 +95,11 @@ const Hero = () => {
             variants={fadeUpVariant}
             custom={0.3}
           >
-            <Button icon={<Download size={20} />} size="lg">
-              Download CV
-            </Button>
+            <Link href="/Ravikant_Waghmare_Updated_CV.pdf" download>
+              <Button icon={<Download size={20} />} size="lg">
+                Download CV
+              </Button>
+            </Link>
             <Link href="mailto:ravikantwaghmare82@gmail.com">
               <Button icon={<Mail size={20} />} size="lg">
                 Connect
@@ -143,6 +145,7 @@ const Hero = () => {
           <div className="relative z-10 w-full">
             <Image
               src="/image/portfolioHeaderImg.png"
+              title="Ravikant Waghmare"
               alt="Ravikant Waghmare"
               width={1000}
               height={1000}
