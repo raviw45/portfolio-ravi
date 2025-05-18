@@ -23,7 +23,7 @@ export async function generateMetadata({
     };
   }
 
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/blogs/${blog.id}`;
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_DOMAIN}blogs/${blog.id}`;
 
   return {
     title: `${blog.title} | Ravikant Waghmare`,
