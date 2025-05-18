@@ -2,44 +2,62 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggler from "./theme-toggle";
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const linkClickedRef = useRef(false);
+  const ticking = useRef(false);
+  const recentlyClicked = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
 
-      if (linkClickedRef.current) {
-        linkClickedRef.current = false;
-        return;
+          if (!recentlyClicked.current) {
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+              setShowNavbar(false);
+            } else {
+              setShowNavbar(true);
+            }
+          }
+
+          setLastScrollY(currentScrollY);
+          ticking.current = false;
+        });
+
+        ticking.current = true;
       }
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
-      }
-
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const navLinks = ["Home", "About", "Experience", "Blogs", "Contact"];
-
+  // Reset `recentlyClicked` after short delay
   const handleLinkClick = () => {
     setIsOpen(false);
-    setShowNavbar(false);
-    linkClickedRef.current = true;
+    recentlyClicked.current = true;
+    setTimeout(() => {
+      recentlyClicked.current = false;
+    }, 1000); // 1 second delay prevents scroll-triggered hide
+  };
+
+  const navLinks = ["Home", "About", "Experience", "Blogs", "Contact"];
+
+  const getLinkHref = (item: string) => {
+    const lower = item.toLowerCase();
+    if (lower === "blogs") return "/blogs";
+    if (lower === "home") return "/";
+    return isHome ? `#${lower}` : `/#${lower}`;
   };
 
   return (
@@ -72,7 +90,7 @@ const Navbar = () => {
           {navLinks.map((item) => (
             <Link
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={getLinkHref(item)}
               className="relative group cursor-pointer"
               onClick={handleLinkClick}
             >
@@ -102,7 +120,7 @@ const Navbar = () => {
             {navLinks.map((item) => (
               <Link
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={getLinkHref(item)}
                 className="hover:text-indigo-500 transition-colors"
                 onClick={handleLinkClick}
               >
