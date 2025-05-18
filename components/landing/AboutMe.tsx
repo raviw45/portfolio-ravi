@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import SocialIcons from "../common/SocialIcons";
-import AnimatedBlog from "../common/animated-blob";
 import { motion } from "framer-motion";
 import { fadeUpVariant } from "@/config/framer";
 
@@ -15,29 +14,32 @@ const AboutMe = () => {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="py-20 overflow-hidden"
+      className="md:py-20 py-8 overflow-hidden w-full"
     >
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="w-[95%] md:w-[85%] mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Image Section */}
         <motion.div
-          className="flex justify-center"
+          className="relative flex justify-center items-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeUpVariant}
           custom={0}
         >
-          <div className="relative z-20 w-64 h-64 md:h-96 md:w-96 rounded-full overflow-hidden shadow-2xl bg-gradient-to-tr from-indigo-400 via-purple-500 to-pink-500 p-1 animate-float">
-            <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
-              <Image
-                src="/image/profile.jpg"
-                alt="Ravikant Waghmare"
-                fill
-                className="object-contain w-full h-full rounded-full transform hover:scale-105 transition-transform duration-500"
-              />
+          {/* Relative wrapper to control layering */}
+          <div className="relative w-fit">
+            {/* Profile Image on top */}
+            <div className="relative z-10 rounded-full overflow-hidden shadow-2xl bg-gradient-to-tr from-indigo-400 via-purple-500 to-pink-500 p-1 animate-float">
+              <div className="w-64 h-64 md:h-96 md:w-96 rounded-full overflow-hidden bg-white dark:bg-gray-900">
+                <Image
+                  src="/image/profile.jpg"
+                  alt="Ravikant Waghmare"
+                  fill
+                  className="object-contain w-full h-full rounded-full transform hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
           </div>
-          <AnimatedBlog />
         </motion.div>
 
         {/* Info Section */}
@@ -48,7 +50,7 @@ const AboutMe = () => {
           variants={fadeUpVariant}
           custom={1}
         >
-          <h2 className="text-4xl font-bold text-indigo-600 dark:text-indigo-300 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
             About Me
           </h2>
           <p className="text-gray-700 dark:text-gray-200 text-lg mb-6">

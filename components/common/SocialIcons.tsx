@@ -6,7 +6,7 @@ const SocialIcons = () => {
   return (
     <div className="flex gap-6 text-gray-700 dark:text-gray-300">
       <a
-        href="https://github.com/yourusername"
+        href="https://github.com/raviw45"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"
@@ -16,7 +16,7 @@ const SocialIcons = () => {
       </a>
 
       <a
-        href="https://linkedin.com/in/yourusername"
+        href="https://www.linkedin.com/in/ravikant-waghmare"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"

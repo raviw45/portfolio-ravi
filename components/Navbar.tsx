@@ -55,7 +55,7 @@ const Navbar = () => {
         color: "var(--foreground)",
       }}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 h-20">
+      <div className="w-[95%] md:w-[85%] mx-auto flex justify-between items-center h-20">
         {/* Logo */}
         <div className="order-1 flex items-center gap-2">
           <Image

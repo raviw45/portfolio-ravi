@@ -58,9 +58,9 @@ const Hero = () => {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="flex items-center w-full min-h-[calc(100vh-5rem)] px-4 sm:px-6 scroll-mt-20"
+      className="flex items-center w-full min-h-[calc(100vh-5rem)] not-even:not-last:scroll-mt-20"
     >
-      <section className="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="w-[95%] md:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-8">
         {/* Left side */}
         <motion.div
           className="flex flex-col justify-center space-y-4"
@@ -71,7 +71,7 @@ const Hero = () => {
         >
           <motion.div variants={fadeUpVariant} custom={0.1}>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
-              Hey, I&apos;m <span>Ravikant Waghmare</span>
+              I&apos;m <span>Ravikant Waghmare</span>
             </h1>
             <h2 className="text-lg md:text-2xl font-bold tracking-wide mt-2 text-indigo-600 dark:text-indigo-300">
               I am a {text}
@@ -131,22 +131,22 @@ const Hero = () => {
 
         {/* Right side */}
         <motion.div
-          className="relative flex justify-center items-center"
+          className="relative flex justify-center items-center w-full h-full"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
         >
           {/* Animated blob */}
-          <AnimatedBlog />
+          <AnimatedBlog css={"w-full h-full"} />
 
           {/* Image */}
-          <div className="relative z-10 w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px]">
+          <div className="relative z-10 w-full">
             <Image
               src="/image/portfolioHeaderImg.png"
               alt="Ravikant Waghmare"
-              width={500}
-              height={500}
-              className="w-full h-auto rounded-lg hover:scale-[1.02] transition-transform duration-500"
+              width={1000}
+              height={1000}
+              className="w-full h-auto rounded-lg object-cover hover:scale-[1.02] transition-transform duration-500"
               priority
             />
           </div>

@@ -23,29 +23,31 @@ const Skills = () => {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="px-4 md:mx-8 sm:px-6 py-12 scroll-mt-20"
+      className="md:py-20 py-8 scroll-mt-20"
     >
-      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
-        My Skills
-      </h2>
+      <div className="w-[95%] md:w-[85%] mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
+          My Skills
+        </h2>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
-        {tabs.map((t, index) => (
-          <button
-            key={t.id}
-            onClick={() => setActiveTab(index)}
-            className={`px-5 py-2 rounded-full font-medium transition-all duration-300 ${
-              index === activeTab
-                ? "bg-indigo-600 text-white shadow-lg scale-105"
-                : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-gray-700"
-            }`}
-          >
-            {t.name}
-          </button>
-        ))}
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {tabs.map((t, index) => (
+            <button
+              key={t.id}
+              onClick={() => setActiveTab(index)}
+              className={`px-5 py-2 rounded-full font-medium transition-all duration-300 ${
+                index === activeTab
+                  ? "bg-indigo-600 text-white shadow-lg scale-105"
+                  : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-gray-700"
+              }`}
+            >
+              {t.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="transition-all duration-500">{ActiveTabComponent}</div>
       </div>
-
-      <div className="transition-all duration-500">{ActiveTabComponent}</div>
     </section>
   );
 };

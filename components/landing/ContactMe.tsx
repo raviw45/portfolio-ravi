@@ -70,9 +70,9 @@ const ContactMe: React.FC = () => {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="py-24 "
+      className="md:py-24 py-8 overflow-hidden scroll-mt-20"
     >
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div className="w-[95%] md:w-[85%] mx-auto grid md:grid-cols-2 gap-4 items-center">
         {/* Left Info Section */}
         <motion.div
           className="text-center md:text-left space-y-6"
@@ -82,7 +82,7 @@ const ContactMe: React.FC = () => {
           variants={fadeUpVariant}
           custom={0}
         >
-          <h2 className="text-5xl font-extrabold text-indigo-600 dark:text-indigo-300">
+          <h2 className="text-3xl sm:text-4xl font-bold  mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
             Let&apos;s Connect!
           </h2>
           <p className="text-lg text-gray-700 dark:text-gray-300">

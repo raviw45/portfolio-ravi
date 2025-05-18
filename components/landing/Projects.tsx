@@ -95,7 +95,7 @@ const ProjectCard = ({
 
       <div className="p-6 flex flex-col gap-4">
         <div className="relative group">
-          <h3 className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer transition">
+          <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer transition">
             {title}
           </h3>
           <div className="absolute left-0 top-full mt-2 w-72 p-3 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-50">
@@ -145,15 +145,23 @@ const ProjectCard = ({
 
 const ProjectsShowcase = () => {
   return (
-    <section className="max-w-7xl mx-auto py-16 px-6">
-      <h2 className="text-4xl font-extrabold text-center text-indigo-600 dark:text-indigo-300 mb-12">
-        My Projects
-      </h2>
+    <section
+      style={{
+        backgroundColor: "var(--background)",
+        color: "var(--foreground)",
+      }}
+      className="md:py-20 py-8 overflow-hidden scroll-mt-20"
+    >
+      <div className="w-[95%] md:w-[85%] mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
+          My Projects
+        </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {projects.map((project, i) => (
-          <ProjectCard key={i} {...project} index={i} />
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {projects.map((project, i) => (
+            <ProjectCard key={i} {...project} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   );

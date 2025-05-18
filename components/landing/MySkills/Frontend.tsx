@@ -85,11 +85,7 @@ const Frontend: React.FC = () => {
   };
 
   return (
-    <section className="px-6 py-4 max-w-6xl mx-auto">
-      <h2 className="text-center text-3xl md:text-4xl font-extrabold mb-2 text-gray-900 dark:text-gray-100">
-        Frontend Skills
-      </h2>
-
+    <section className="py-4 max-w-6xl mx-auto">
       {(["core", "library"] as const).map((group) => (
         <div key={group} className="mb-12">
           <h3 className="text-xl font-semibold mb-6 text-gray-700 dark:text-gray-300 text-center">

@@ -66,8 +66,8 @@ const DevOps: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-12 max-w-md mx-auto px-6">
-      <h2 className="text-center text-4xl font-extrabold mb-14 text-gray-900 dark:text-gray-100">
+    <section className="py-6 max-w-md mx-auto">
+      <h2 className="text-center text-4xl font-extrabold mb-18 text-gray-900 dark:text-gray-100">
         DevOps Skills
       </h2>
 

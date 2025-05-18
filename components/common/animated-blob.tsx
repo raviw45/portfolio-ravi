@@ -1,8 +1,12 @@
 import React from "react";
 
-const AnimatedBlog = () => {
+interface AnimatedBlogProps {
+  css?: string;
+}
+
+const AnimatedBlog: React.FC<AnimatedBlogProps> = ({ css = "" }) => {
   return (
-    <div className="absolute w-[250px] sm:w-[300px] md:w-[600px] h-[250px] sm:h-[300px] md:h-[600px] animate-blob">
+    <div className={`absolute ${css}`}>
       <div
         className="absolute rounded-full bg-indigo-600 dark:bg-indigo-500 opacity-30 dark:opacity-40 blur-2xl"
         style={{

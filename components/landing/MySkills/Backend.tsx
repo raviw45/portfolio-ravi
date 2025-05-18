@@ -88,7 +88,7 @@ const SkillGrid = ({
 
 const Backend: React.FC = () => {
   return (
-    <section className="flex flex-col items-center justify-center py-8 px-4 max-w-7xl mx-auto">
+    <section className="flex flex-col items-center justify-center py-4 max-w-7xl mx-auto">
       {/* Backend Skills */}
       <SkillGrid
         title="Backend Skills"
