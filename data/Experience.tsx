@@ -8,6 +8,7 @@ import {
   SiRedis,
   SiNodedotjs,
 } from "react-icons/si";
+
 export const timelineData = [
   {
     title: "Software Engineer",
@@ -16,9 +17,10 @@ export const timelineData = [
     location: "Pune, India",
     icon: <FaBriefcase className="text-white text-lg" />,
     points: [
-      "Built secure REST APIs with Spring Boot & Hibernate.",
-      "Created responsive UIs with React.js & Next.js.",
-      "Integrated Kafka, Redis, and AWS for scale & performance.",
+      "Built secure REST APIs using Spring Boot, Spring Security, and Hibernate.",
+      "Developed responsive UIs with React.js, Next.js, and managed state using Redux & React Query.",
+      "Integrated Kafka and Redis for real-time processing and performance optimization.",
+      "Deployed scalable apps on AWS (EC2, ECS, ECR, Amplify) using Docker and Jenkins CI/CD.",
     ],
     skills: [
       { Icon: FaReact, color: "#61DAFB" },
@@ -38,9 +40,10 @@ export const timelineData = [
     location: "Pune, India",
     icon: <FaBriefcase className="text-white text-lg" />,
     points: [
-      "Developed dynamic UIs using React, Redux & Tailwind.",
-      "Enhanced performance and security with best practices.",
-      "Built pixel-perfect cross-browser UI components.",
+      "Created dynamic UIs with React.js, Redux, and Tailwind CSS for cross-browser compatibility.",
+      "Built modern landing pages with responsive design and pixel-perfect implementation.",
+      "Followed security best practices to prevent XSS/CSRF and improve frontend performance.",
+      "Collaborated on projects using Git, GitHub, and Jira in an agile environment.",
     ],
     skills: [
       { Icon: FaReact, color: "#61DAFB" },

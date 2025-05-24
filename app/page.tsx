@@ -1,4 +1,5 @@
 import AboutMe from "@/components/landing/AboutMe";
+import Certifications from "@/components/landing/Certifications";
 import ContactMe from "@/components/landing/ContactMe";
 import ExperienceTimeline from "@/components/landing/Experience";
 import Hero from "@/components/landing/Hero";
@@ -15,6 +16,7 @@ const page = () => {
       <Skills />
       <ExperienceTimeline />
       <ProjectsShowcase />
+      <Certifications />
       <Testimonials />
       <ContactMe />
     </div>

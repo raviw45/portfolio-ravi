@@ -59,8 +59,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
-  transition: background 0.3s, color 0.3s;
+  font-family: var(--font-inter), sans-serif;
+  transition:
+    background 0.3s,
+    color 0.3s;
 }
 @keyframes spin-slow {
   0% {

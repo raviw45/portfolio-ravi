@@ -28,22 +28,18 @@ const Hero = () => {
     let timeout: NodeJS.Timeout;
 
     if (!isDeleting && text.length < currentWord.length) {
-      // Typing
       timeout = setTimeout(() => {
         setText(currentWord.substring(0, text.length + 1));
       }, speed);
     } else if (isDeleting && text.length > 0) {
-      // Deleting
       timeout = setTimeout(() => {
         setText(currentWord.substring(0, text.length - 1));
       }, speed / 2);
     } else if (!isDeleting && text.length === currentWord.length) {
-      // Wait before deleting
       timeout = setTimeout(() => {
         setIsDeleting(true);
-      }, 2000); // 2 seconds pause after typing full word
+      }, 2000);
     } else if (isDeleting && text.length === 0) {
-      // Move to next word after deleting
       setIsDeleting(false);
       setWordIndex((prev) => (prev + 1) % typingWords.length);
     }
@@ -60,7 +56,7 @@ const Hero = () => {
       }}
       className="flex items-center w-full min-h-[calc(100vh-5rem)] not-even:not-last:scroll-mt-20"
     >
-      <section className="w-[95%] md:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-8">
+      <section className="w-[95%] md:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-4">
         {/* Left side */}
         <motion.div
           className="flex flex-col justify-center space-y-4"
@@ -70,17 +66,18 @@ const Hero = () => {
           custom={0}
         >
           <motion.div variants={fadeUpVariant} custom={0.1}>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide leading-snug sm:leading-tight md:leading-tight lg:leading-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
               I&apos;m <span>Ravikant Waghmare</span>
             </h1>
-            <h2 className="text-lg md:text-2xl font-bold tracking-wide mt-2 text-indigo-600 dark:text-indigo-300">
+
+            <h2 className="text-lg md:text-2xl font-bold tracking-wide mt-2 leading-snug md:leading-snug text-indigo-600 dark:text-indigo-300">
               I am a {text}
-              <span className="inline-block w-1 h-6 bg-indigo-600 dark:bg-indigo-300 animate-blink ml-1"></span>
+              <span className="inline-block w-1 h-6 bg-indigo-600 dark:bg-indigo-300 animate-blink ml-1 align-bottom"></span>
             </h2>
           </motion.div>
 
           <motion.p
-            className="text-base sm:text-lg max-w-xl leading-relaxed text-gray-700 dark:text-gray-300"
+            className="text-base sm:text-md text-gray-700 dark:text-gray-300"
             variants={fadeUpVariant}
             custom={0.2}
           >
@@ -91,7 +88,7 @@ const Hero = () => {
           </motion.p>
 
           <motion.div
-            className="pt-4 flex flex-wrap gap-4"
+            className="pt-2 flex flex-wrap gap-4"
             variants={fadeUpVariant}
             custom={0.3}
           >
