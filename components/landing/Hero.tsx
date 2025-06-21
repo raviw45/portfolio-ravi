@@ -92,7 +92,7 @@ const Hero = () => {
             variants={fadeUpVariant}
             custom={0.3}
           >
-            <Link href="/Ravikant_Waghmare_Updated_CV.pdf" download>
+            <Link href="/Ravikant_Waghmare_Resume.pdf" download>
               <Button icon={<Download size={20} />} size="lg">
                 Download CV
               </Button>
