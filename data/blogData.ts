@@ -561,4 +561,134 @@ export default defineConfig({
       },
     ],
   },
+  {
+    id: "trpc-typesafety-nextjs",
+    title: "How tRPC Works for Type Safety in Next.js",
+    excerpt:
+      "Learn how to use tRPC in Next.js for full end-to-end type safety, including folder structure, server-side setup, and client-side integration.",
+    date: "2025-08-13",
+    content: [
+      {
+        type: "text",
+        content:
+          "🔧 **Overview**: tRPC enables full-stack type safety in Next.js applications by letting you define your API procedures and types in one place and automatically inferring them on the client. No more manual API typings!",
+      },
+      {
+        type: "text",
+        content: "📂 **Folder Structure** (Recommended for tRPC in Next.js):",
+      },
+      {
+        type: "code",
+        content: `src/
+├── server/
+│   ├── trpc/
+│   │   ├── routers/
+│   │   │   ├── example.ts
+│   │   │   └── _app.ts
+│   │   ├── utils.ts
+│   │   └── context.ts
+│   └── index.ts
+├── pages/
+│   └── api/
+│       └── trpc/[trpc].ts
+└── utils/
+    └── trpc.ts`,
+      },
+      {
+        type: "text",
+        content: "1️⃣ **Install tRPC dependencies:**",
+      },
+      {
+        type: "code",
+        content:
+          "npm install @trpc/server @trpc/client @trpc/react-query @tanstack/react-query zod",
+      },
+      {
+        type: "text",
+        content: "2️⃣ **Server-Side Setup** (`src/server/trpc`):",
+      },
+      {
+        type: "code",
+        content: `// utils.ts
+import { initTRPC } from "@trpc/server";
+
+const t = initTRPC.create();
+export const router = t.router;
+export const publicProcedure = t.procedure;
+
+// context.ts
+export const createContext = async () => ({});
+export type Context = Awaited<ReturnType<typeof createContext>>;
+
+// routers/example.ts
+import { publicProcedure, router } from "../utils";
+import { z } from "zod";
+
+export const exampleRouter = router({
+  hello: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(({ input }) => {
+      return { greeting: \`Hello, \${input.name}!\` };
+    }),
+});
+
+// routers/_app.ts
+import { router } from "../utils";
+import { exampleRouter } from "./example";
+
+export const appRouter = router({
+  example: exampleRouter,
+});
+export type AppRouter = typeof appRouter;`,
+      },
+      {
+        type: "text",
+        content: "3️⃣ **API Handler** (`pages/api/trpc/[trpc].ts`):",
+      },
+      {
+        type: "code",
+        content: `import { createNextApiHandler } from "@trpc/server/adapters/next";
+import { appRouter } from "@/server/trpc/routers/_app";
+import { createContext } from "@/server/trpc/context";
+
+export default createNextApiHandler({
+  router: appRouter,
+  createContext,
+});`,
+      },
+      {
+        type: "text",
+        content: "4️⃣ **Client-Side Setup** (`src/utils/trpc.ts`):",
+      },
+      {
+        type: "code",
+        content: `import { createTRPCReact } from "@trpc/react-query";
+import type { AppRouter } from "@/server/trpc/routers/_app";
+
+export const trpc = createTRPCReact<AppRouter>();`,
+      },
+      {
+        type: "text",
+        content: "5️⃣ **Using tRPC in a React Component**:",
+      },
+      {
+        type: "code",
+        content: `import { trpc } from "@/utils/trpc";
+
+export default function HomePage() {
+  const helloQuery = trpc.example.hello.useQuery({ name: "Ravikant" });
+
+  if (helloQuery.isLoading) return <p>Loading...</p>;
+  if (helloQuery.error) return <p>Error: {helloQuery.error.message}</p>;
+
+  return <p>{helloQuery.data?.greeting}</p>;
+}`,
+      },
+      {
+        type: "text",
+        content:
+          "🎯 With this setup, your API input and output types are automatically inferred on the client from the server definitions — ensuring type safety across the stack without manual syncing.",
+      },
+    ],
+  },
 ];
