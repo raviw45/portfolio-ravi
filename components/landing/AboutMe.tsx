@@ -54,14 +54,16 @@ const AboutMe = () => {
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
             About Me
           </h2>
+
           <p className="text-gray-700 dark:text-gray-200 text-lg mb-6">
-            I&apos;m a full-stack software engineer passionate about building
-            performant and user-focused web applications. At{" "}
+            I&apos;m a results-driven full-stack software engineer with 2+ years
+            of experience building scalable web applications, high-performance
+            REST APIs, and cloud-ready backend systems. At{" "}
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
               Vionsys IT Solutions India Pvt. Ltd.
             </span>
-            , I focus on developing secure, scalable platforms using modern
-            frontend and backend technologies.
+            , I work across the full stack—developing modern, responsive UIs and
+            architecting secure, optimized microservices deployed on AWS.
           </p>
 
           <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-base">
@@ -70,16 +72,24 @@ const AboutMe = () => {
               Solutions
             </li>
             <li>
-              ⚛️ <strong>Frontend:</strong> Expert in React.js, Next.js, and
-              Tailwind CSS for building responsive and dynamic UIs
+              ⚛️ <strong>Frontend:</strong> React.js, Next.js, TypeScript,
+              Tailwind CSS, GraphQL, and modern UI libraries (ShadCN/UI, MUI,
+              Ant Design)
             </li>
             <li>
-              🖥️ <strong>Backend:</strong> Skilled in Node.js, Express.js, Java,
-              and Spring Boot with RESTful API development
+              🖥️ <strong>Backend:</strong> Node.js, Express.js, Java, Spring
+              Boot, Microservices, Redis caching, Kafka messaging
             </li>
             <li>
-              ☁️ <strong>Cloud & DevOps:</strong> AWS, Docker, Jenkins, and
-              Kubernetes for secure deployment pipelines
+              🗄️ <strong>Databases:</strong> PostgreSQL, MongoDB, SQL, Redis
+            </li>
+            <li>
+              ☁️ <strong>Cloud & DevOps:</strong> AWS (EC2, S3), Docker,
+              Kubernetes, GitHub Actions, Jenkins, CI/CD automation
+            </li>
+            <li>
+              🔐 <strong>Security:</strong> JWT, RBAC, secure API design, cloud
+              deployment best practices
             </li>
             <li>
               🏆 <strong>Awards:</strong> Team of the Quarter & Champion of the
