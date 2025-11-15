@@ -691,4 +691,705 @@ export default function HomePage() {
       },
     ],
   },
+  {
+    id: "how-to-improve-spring-boot-performance-api-with-caching",
+    title: "Boost Performance with Caching in Spring Boot",
+    excerpt:
+      "Learn how to implement caching in Spring Boot using @Cacheable, @CacheEvict, Redis, and EntityGraph for performance optimization with practical real-world examples.",
+    date: "2025-10-15",
+    content: [
+      {
+        type: "text",
+        content:
+          "🚀 **Overview**: Caching is one of the most effective ways to boost the performance of Spring Boot applications. By reducing repetitive database calls, caching improves response time, reduces load on DB, and enhances API efficiency. In this blog, we'll implement caching using `@Cacheable`, `@CacheEvict`, and `Redis`, with a real working example from an Employee & Address management system.",
+      },
+
+      {
+        type: "text",
+        content: "📌 **Why Use Caching?**",
+      },
+      {
+        type: "text",
+        content:
+          "- Reduce repeated database queries\n- Improve API response time\n- Handle high traffic efficiently\n- Reduce server resource usage\n- Improve scalability in microservice environments",
+      },
+
+      // SECTION 1 — Enabling Cache
+      {
+        type: "text",
+        content: "1️⃣ **Enable Caching in Spring Boot**",
+      },
+      {
+        type: "code",
+        content: `@SpringBootApplication
+@EnableCaching
+public class EmployeeApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(EmployeeApplication.class, args);
+    }
+}`,
+      },
+
+      // SECTION 2 — Controller Code
+      {
+        type: "text",
+        content:
+          "2️⃣ **Using @Cacheable and @CacheEvict in Controller**\nBelow is the controller used for employee CRUD operations with caching applied:",
+      },
+      {
+        type: "code",
+        content: `@RestController
+@RequestMapping("/employee")
+@CacheConfig(cacheNames = "employees")
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository empRepo;
+
+    @PostMapping("/save")
+    @CacheEvict(allEntries = true)
+    public ResponseEntity<Employee> save(@RequestBody Employee employee) {
+
+        if (employee.getAddresses() != null) {
+            employee.getAddresses().forEach(address -> address.setEmployee(employee));
+        }
+
+        Employee saved = empRepo.save(employee);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/all")
+    @Cacheable(key = "'page_' + #page")
+    public ResponseEntity<Page<Employee>> getAll(@RequestParam(defaultValue = "0") int page) {
+        Page<Employee> employees = empRepo.findAll(
+            PageRequest.of(page, 10, Sort.by("id").descending())
+        );
+        return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/{id}")
+    @Cacheable(key = "#id")
+    public ResponseEntity<Employee> getById(@PathVariable("id") Integer id) {
+        Employee emp = empRepo.findById(id).get();
+        return ResponseEntity.ok(emp);
+    }
+}`,
+      },
+
+      // SECTION 3 — Repository with EntityGraph
+      {
+        type: "text",
+        content:
+          "3️⃣ **Using @EntityGraph to Avoid N+1 Problem**\nTo prevent lazy-loading issues when fetching employees with their addresses, we use `@EntityGraph` in the repository.",
+      },
+      {
+        type: "code",
+        content: `@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+    @EntityGraph(attributePaths = "addresses")
+    Page<Employee> findAll(Pageable pageable);
+}`,
+      },
+
+      // SECTION 4 — Redis integration
+      {
+        type: "text",
+        content: "4️⃣ **Add Redis for High-Performance Caching (Recommended)**",
+      },
+      {
+        type: "text",
+        content: "📦 Install Redis locally or use Docker:",
+      },
+      {
+        type: "code",
+        content: `docker run -p 6379:6379 --name redis-cache -d redis`,
+      },
+
+      {
+        type: "text",
+        content: "📍 Add Redis Starter:",
+      },
+      {
+        type: "code",
+        content: `implementation 'org.springframework.boot:spring-boot-starter-data-redis'`,
+      },
+
+      {
+        type: "text",
+        content: "📍 Configure Redis in `application.properties`:",
+      },
+      {
+        type: "code",
+        content: `spring.cache.type=redis
+spring.redis.host=localhost
+spring.redis.port=6379`,
+      },
+
+      // SECTION 5 — Expected Behavior
+      {
+        type: "text",
+        content: "5️⃣ **What Happens After Applying Caching?**",
+      },
+      {
+        type: "text",
+        content:
+          "- First API hit → Fetches data from DB and stores it in Redis\n- Next API hits → Served directly from cache (much faster!)\n- When new employee is saved → `@CacheEvict` clears cache\n- Page-wise cache: `/all?page=0` vs `/all?page=1` are cached separately",
+      },
+
+      // SECTION 6 — Performance Boost
+      {
+        type: "text",
+        content: "⚡ **Performance Boost Observed**:",
+      },
+      {
+        type: "text",
+        content:
+          "- Response time reduced by **40–70%** (for paginated queries)\n- Database load decreased significantly\n- Improved scalability under load",
+      },
+
+      // FINAL WRAP-UP
+      {
+        type: "text",
+        content:
+          "🎯 **Conclusion**: Caching is a simple yet extremely powerful optimization technique. With Spring Boot, annotations like `@Cacheable`, `@CacheEvict`, and `@CacheConfig` make caching easy to implement. Combined with Redis, your application becomes significantly faster, scalable, and production-ready.",
+      },
+    ],
+  },
+  {
+    id: "microservices-architecture-with-spring-boot",
+    title: "Microservices Architecture with Spring Boot",
+    excerpt:
+      "Learn how microservices work with Spring Boot using Config Server, Eureka Discovery, API Gateway, and Resilience4j. This blog covers the complete workflow for building scalable, secure, and resilient distributed systems.",
+    date: "2025-11-15",
+    content: [
+      {
+        type: "text",
+        content:
+          "🚀 **Overview**: Microservices architecture allows us to build scalable, flexible, and independently deployable services. Instead of a single monolithic system, microservices split the application into smaller components that can scale and evolve independently. In this blog, we'll walk through a complete microservices workflow using Spring Boot — from creating services to config management, service discovery, API gateway routing, and resilience using Resilience4j.",
+      },
+
+      // SECTION — What are Microservices
+      {
+        type: "text",
+        content: "📌 **What Are Microservices?**",
+      },
+      {
+        type: "text",
+        content:
+          "- Independently deployable smaller services\n- Each service handles a specific business capability\n- Each service has its own database\n- Loose coupling and high scalability\n- Ideal for cloud-native and distributed applications",
+      },
+
+      // SECTION — Architecture Steps
+      {
+        type: "text",
+        content: "1️⃣ **Create Individual Microservices**",
+      },
+      {
+        type: "text",
+        content:
+          "This is the first foundational step. You create services such as User Service, Order Service, Product Service, Payment Service, etc. Each of these services contains its own logic and database, ensuring independence and high scalability.",
+      },
+
+      // CONFIG SERVER
+      {
+        type: "text",
+        content:
+          "2️⃣ **Setting Up Spring Cloud Config Server (Centralized Configuration)**",
+      },
+      {
+        type: "text",
+        content:
+          "Managing configuration for multiple services can get complex. Spring Cloud Config Server centralizes all configurations and loads them from GitHub or a remote repository. This helps maintain environment-level configs cleanly without duplication.",
+      },
+      {
+        type: "code",
+        content: `@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}`,
+      },
+      {
+        type: "text",
+        content: "📍 Example of config file in GitHub:",
+      },
+      {
+        type: "code",
+        content: `user-service-dev.properties
+order-service-dev.properties
+product-service-dev.properties`,
+      },
+
+      // EUREKA DISCOVERY
+      {
+        type: "text",
+        content: "3️⃣ **Service Discovery with Eureka Server**",
+      },
+      {
+        type: "text",
+        content:
+          "Eureka solves the biggest challenge in microservices: **How do services find each other?** Instead of hardcoding URLs, each service registers with Eureka. Other services communicate using their registered service name.",
+      },
+      {
+        type: "code",
+        content: `@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryServerApplication.class, args);
+    }
+}`,
+      },
+
+      // API GATEWAY
+      {
+        type: "text",
+        content: "4️⃣ **API Gateway with Spring Cloud Gateway + Security**",
+      },
+      {
+        type: "text",
+        content:
+          "The API Gateway acts as the entry point for all client requests. It handles routing, authentication, cross-cutting concerns, filters, and load balancing. You can secure it using **Spring Security + JWT**, and route internal requests using service names via Eureka.",
+      },
+      {
+        type: "code",
+        content: `spring.cloud.gateway.routes[0].id=user-service
+spring.cloud.gateway.routes[0].uri=lb://USER-SERVICE
+spring.cloud.gateway.routes[0].predicates=Path=/users/**`,
+      },
+
+      // RESILIENCE4J
+      {
+        type: "text",
+        content: "5️⃣ **Resilience with Resilience4j (Circuit Breaker)**",
+      },
+      {
+        type: "text",
+        content:
+          "Distributed systems must handle failures gracefully. Resilience4j protects services from cascading failures using Circuit Breakers, Retries, TimeLimiters, and Bulkheads.",
+      },
+      {
+        type: "code",
+        content: `@CircuitBreaker(name = "orderService", fallbackMethod = "orderFallback")
+public OrderResponse getOrders(String userId) {
+    return restTemplate.getForObject("http://ORDER-SERVICE/orders/" + userId, OrderResponse.class);
+}`,
+      },
+      {
+        type: "text",
+        content:
+          "📌 **Circuit Breaker Workflow:**\n- Tries calling a service\n- If failures exceed threshold → opens the circuit\n- Traffic is stopped to the failing service\n- After waitDuration → half-open state tests the service again\n- If healthy → circuit closes and resumes normally",
+      },
+
+      // DATA FLOW / ARCHITECTURE
+      {
+        type: "text",
+        content: "6️⃣ **Final Architecture Flow**",
+      },
+      {
+        type: "text",
+        content:
+          "**Client → API Gateway → Eureka Discovery → Microservices → Config Server → Databases → Resilience Layer (Resilience4j)**",
+      },
+
+      // Benefits
+      {
+        type: "text",
+        content: "✨ **Benefits of Microservices Architecture**",
+      },
+      {
+        type: "text",
+        content:
+          "- Independent deployment of each service\n- Easy to scale only the required service\n- Technology flexibility (Java, Node, Go, etc.)\n- Better fault isolation\n- Increased developer productivity\n- Ideal for cloud and DevOps",
+      },
+
+      // Conclusion
+      {
+        type: "text",
+        content:
+          "🎯 **Conclusion**: Microservices architecture enables us to build scalable, flexible, and resilient systems. With Spring Boot, setting up services, config server, Eureka, API gateway, and Resilience4j becomes easier and production-ready. This architecture is a solid foundation for large-scale applications and cloud-native deployments.",
+      },
+    ],
+  },
+  {
+    id: "react-query-data-fetching-best-practices",
+    title: "Mastering Data Fetching with React Query",
+    excerpt:
+      "Learn how React Query simplifies data fetching, caching, background updates, and synchronization in React applications using powerful hooks like useQuery, useMutation, and QueryClient.",
+    date: "2025-11-21",
+    content: [
+      {
+        type: "text",
+        content:
+          "🚀 **Overview**: React Query (TanStack Query) is one of the most impactful libraries for managing server-state in React apps. It handles caching, background updates, persistency, pagination, retries, and automatic UI synchronization. If you're tired of managing loading states, global state, or manual API calls—React Query is your best friend.",
+      },
+
+      // SECTION — Why React Query
+      {
+        type: "text",
+        content: "📌 **Why Use React Query?**",
+      },
+      {
+        type: "text",
+        content:
+          "- Eliminates manual API state management\n- Built-in caching & deduplication\n- Background refetching for fresh data\n- Auto retry on failed requests\n- Pagination & infinite queries support\n- Avoids unnecessary global state libraries\n- Makes API calls predictable and declarative",
+      },
+
+      // SECTION — Setting Up React Query
+      {
+        type: "text",
+        content: "1️⃣ **Setup React Query in a React/Next.js App**",
+      },
+      {
+        type: "code",
+        content: `import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <YourComponents />
+    </QueryClientProvider>
+  );
+}`,
+      },
+
+      // Basic useQuery
+      {
+        type: "text",
+        content: "2️⃣ **Basic Data Fetching with useQuery**",
+      },
+      {
+        type: "text",
+        content:
+          "The `useQuery` hook handles fetching, caching, and updating data automatically with zero boilerplate.",
+      },
+      {
+        type: "code",
+        content: `const { data, isLoading, error } = useQuery({
+  queryKey: ["users"],
+  queryFn: () => axios.get("/api/users").then(res => res.data),
+});
+
+if (isLoading) return <p>Loading...</p>;
+if (error) return <p>Error fetching users</p>;`,
+      },
+
+      // QueryKey explained
+      {
+        type: "text",
+        content: "📍 **What is queryKey?**",
+      },
+      {
+        type: "text",
+        content:
+          "`queryKey` uniquely identifies the query. React Query caches data by this key and smartly decides when to refetch.",
+      },
+
+      // Mutations
+      {
+        type: "text",
+        content: "3️⃣ **Mutations with useMutation (Create, Update, Delete)**",
+      },
+      {
+        type: "text",
+        content:
+          "`useMutation` is used for POST, PUT, PATCH, DELETE operations. It does not automatically refetch data — so we invalidate queries manually.",
+      },
+      {
+        type: "code",
+        content: `const mutation = useMutation({
+  mutationFn: (newUser) => axios.post("/api/users", newUser),
+  onSuccess: () => {
+    queryClient.invalidateQueries(["users"]);
+  },
+});`,
+      },
+
+      // Invalidations
+      {
+        type: "text",
+        content: "📌 **Why Invalidate Queries?**",
+      },
+      {
+        type: "text",
+        content:
+          "- Ensures UI shows fresh data\n- No need to manually update lists\n- Maintains consistency automatically",
+      },
+
+      // Pagination
+      {
+        type: "text",
+        content: "4️⃣ **Handling Pagination with Query Keys**",
+      },
+      {
+        type: "code",
+        content: `const { data } = useQuery({
+  queryKey: ["users", page],
+  queryFn: () => axios.get(\`/api/users?page=\${page}\`).then(res => res.data),
+});`,
+      },
+
+      // Infinite Scroll
+      {
+        type: "text",
+        content: "5️⃣ **Infinite Queries (Infinite Scroll)**",
+      },
+      {
+        type: "code",
+        content: `const {
+  data,
+  fetchNextPage,
+  hasNextPage,
+} = useInfiniteQuery({
+  queryKey: ["posts"],
+  queryFn: ({ pageParam = 1 }) =>
+    axios.get(\`/api/posts?page=\${pageParam}\`).then(res => res.data),
+  getNextPageParam: (lastPage) => lastPage.nextPage,
+});`,
+      },
+
+      // Prefetching
+      {
+        type: "text",
+        content: "6️⃣ **Prefetching Data for Faster UI Navigation**",
+      },
+      {
+        type: "code",
+        content: `queryClient.prefetchQuery({
+  queryKey: ["users"],
+  queryFn: () => axios.get("/api/users").then(res => res.data),
+});`,
+      },
+
+      // Background Refetch
+      {
+        type: "text",
+        content: "7️⃣ **Background Refetching for Fresh Data**",
+      },
+      {
+        type: "text",
+        content: "React Query automatically refetches data when:",
+      },
+      {
+        type: "text",
+        content:
+          "- Browser window is refocused\n- Network reconnects\n- Stale time expires",
+      },
+      {
+        type: "code",
+        content: `const { data } = useQuery({
+  queryKey: ["users"],
+  queryFn: fetchUsers,
+  staleTime: 1000 * 60, // 1 minute
+});`,
+      },
+
+      // Devtools
+      {
+        type: "text",
+        content: "8️⃣ **React Query DevTools for Debugging**",
+      },
+      {
+        type: "code",
+        content: `import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+<QueryClientProvider client={queryClient}>
+  <YourApp />
+  <ReactQueryDevtools initialIsOpen={false} />
+</QueryClientProvider>`,
+      },
+
+      // Conclusion
+      {
+        type: "text",
+        content:
+          "🎯 **Conclusion**: React Query transforms how you handle server state in React. With features like caching, mutation handling, pagination, retries, and automatic background refetching, it removes complexity and improves performance dramatically. Whether you're building dashboards, SaaS apps, or microservice-based web apps — React Query is essential for production-grade React development.",
+      },
+    ],
+  },
+  {
+    id: "authjs-nextjs-authentication",
+    title: "Authentication in Next.js Using Auth.js",
+    excerpt:
+      "Learn how to implement secure authentication in Next.js using Auth.js with credentials, OAuth, JWT, middleware protection, and route-based authorization.",
+    date: "2025-11-27",
+    content: [
+      {
+        type: "text",
+        content:
+          "🚀 **Overview**: Auth.js (formerly NextAuth.js) provides a simple, secure, and customizable authentication system for Next.js applications. Whether you want credentials login, OAuth providers like Google/GitHub, or full JWT-based sessions—Auth.js makes it incredibly easy with a plug-and-play architecture.",
+      },
+
+      {
+        type: "text",
+        content: "📌 **Why Auth.js?**",
+      },
+      {
+        type: "text",
+        content:
+          "- Secure and battle-tested authentication\n- Supports Credentials, OAuth, Magic Links, and SSO\n- Works with both JWT and Database sessions\n- Perfectly integrates with Next.js Route Handlers & Middleware\n- Zero API boilerplate—Auth.js auto-generates them",
+      },
+
+      {
+        type: "text",
+        content: "1️⃣ **Install Dependencies**",
+      },
+      {
+        type: "code",
+        content: `npm install next-auth bcrypt`,
+      },
+
+      {
+        type: "text",
+        content:
+          "2️⃣ **Create Auth.js Route Handler** (`src/app/api/auth/[...nextauth]/route.ts`)",
+      },
+      {
+        type: "code",
+        content: `import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
+import { db } from "@/lib/db"; // example DB
+
+export const { handlers, auth } = NextAuth({
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials) => {
+        if (!credentials?.email || !credentials?.password) return null;
+
+        const user = await db.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (!user) return null;
+
+        const isMatch = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!isMatch) return null;
+
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
+      },
+    }),
+  ],
+
+  session: { strategy: "jwt" },
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.user = user;
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = token.user;
+      return session;
+    },
+  },
+});`,
+      },
+
+      {
+        type: "text",
+        content:
+          "3️⃣ **Using the `auth()` Helper to Protect Server Components**",
+      },
+      {
+        type: "code",
+        content: `import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+
+export default async function Dashboard() {
+  const session = await auth();
+
+  if (!session) redirect("/login");
+
+  return <h1>Welcome, {session.user.name}</h1>;
+}`,
+      },
+
+      {
+        type: "text",
+        content:
+          "4️⃣ **Protecting API Routes with Middleware** (`middleware.ts`)",
+      },
+      {
+        type: "code",
+        content: `import { auth } from "next-auth";
+
+export default auth((req) => {
+  // Block unauthenticated users
+  if (!req.auth) {
+    return Response.redirect(new URL("/login", req.url));
+  }
+});
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/api/protected/:path*"],
+};`,
+      },
+
+      {
+        type: "text",
+        content: "5️⃣ **OAuth Example (Google Provider)**",
+      },
+      {
+        type: "code",
+        content: `import GoogleProvider from "next-auth/providers/google";
+
+providers: [
+  GoogleProvider({
+    clientId: process.env.GOOGLE_ID!,
+    clientSecret: process.env.GOOGLE_SECRET!,
+  }),
+],`,
+      },
+
+      {
+        type: "text",
+        content: "6️⃣ **Client-Side Authentication Hooks**",
+      },
+      {
+        type: "code",
+        content: `import { useSession, signIn, signOut } from "next-auth/react";
+
+export default function Navbar() {
+  const { data: session } = useSession();
+
+  return (
+    <nav>
+      {session ? (
+        <>
+          <p>Hello {session.user.name}</p>
+          <button onClick={() => signOut()}>Logout</button>
+        </>
+      ) : (
+        <button onClick={() => signIn()}>Login</button>
+      )}
+    </nav>
+  );
+}`,
+      },
+
+      {
+        type: "text",
+        content:
+          "🎯 **Conclusion**: Auth.js is one of the most powerful and developer-friendly authentication libraries for Next.js. With minimal setup, it gives you secure credential login, OAuth support, JWT sessions, and full route protection across both server and client components. It’s an essential tool for building modern, secure full-stack applications.",
+      },
+    ],
+  },
 ];

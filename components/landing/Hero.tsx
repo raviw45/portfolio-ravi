@@ -81,10 +81,10 @@ const Hero = () => {
             variants={fadeUpVariant}
             custom={0.2}
           >
-            I craft high-performance, SEO-optimized web applications with React,
-            Redux, Next.js, Node.js, and Spring Boot. Skilled in building
-            secure, scalable solutions with RDBMS, REST APIs and DevOps
-            practices.
+            Software Engineer with 2+ years of experience delivering scalable,
+            secure, and SEO-optimized applications using React, Next.js,
+            Node.js, and Spring Boot. Experienced in microservices architecture,
+            cloud solutions on AWS, and DevOps automation.
           </motion.p>
 
           <motion.div
