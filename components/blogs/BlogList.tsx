@@ -3,7 +3,14 @@ import Link from "next/link";
 import { blogData } from "@/data/blogData";
 
 export default function BlogList() {
-  const sortedBlogs = [...blogData].sort(
+  const today = new Date();
+
+  // Show only blogs published today or earlier
+  const filteredBlogs = blogData.filter((blog) => {
+    const blogDate = new Date(blog.date);
+    return blogDate <= today;
+  });
+  const sortedBlogs = [...filteredBlogs].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
