@@ -35,7 +35,7 @@ const Testimonials: React.FC = () => {
             {testimonials.map((t) => (
               <div key={t.name} className="w-full shrink-0 px-2">
                 <figure
-                  className="max-w-xl mx-auto rounded-[14px] border p-8 sm:p-10 text-center"
+                  className="max-w-xl mx-auto rounded-[14px] border p-6 sm:p-8 md:p-10 text-center"
                   style={{ borderColor: "var(--pg-line)", background: "var(--pg-surface-2)" }}
                 >
                   <Quote size={28} className="mx-auto mb-4 text-[var(--pg-accent)]" />

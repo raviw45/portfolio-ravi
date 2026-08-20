@@ -32,7 +32,7 @@ export default function Certifications() {
           </span>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 min-[660px]:grid-cols-2 min-[980px]:grid-cols-4 gap-4">
           {CERTS.map((cert, i) => (
             <Reveal
               key={cert.title}

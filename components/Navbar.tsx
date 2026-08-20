@@ -37,10 +37,10 @@ const Navbar = () => {
         color: "var(--pg-text)",
       }}
     >
-      <div className="max-w-[1180px] mx-auto px-[22px] h-[70px] flex items-center justify-between gap-4">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-[22px] h-[70px] flex items-center justify-between gap-2 sm:gap-4">
         <Link
           href={isHome ? "#top" : "/"}
-          className="flex items-center gap-2.5"
+          className="flex items-center gap-2.5 min-w-0"
           style={{ color: "var(--pg-text)" }}
         >
           <Image
@@ -48,16 +48,16 @@ const Navbar = () => {
             alt="Ravikant Waghmare"
             width={34}
             height={34}
-            className="rounded-full block"
+            className="rounded-full block flex-none"
           />
-          <span className="text-[15px] font-semibold tracking-tight">
+          <span className="hidden sm:inline text-[15px] font-semibold tracking-tight truncate">
             Ravikant Waghmare
           </span>
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-3 sm:gap-4 min-[980px]:gap-6">
           <div
-            className="hidden md:flex gap-6 text-sm"
+            className="hidden min-[980px]:flex gap-6 text-sm"
             style={{ color: "var(--pg-muted)" }}
           >
             {NAV_ITEMS.map((item) => (
@@ -78,7 +78,7 @@ const Navbar = () => {
             type="button"
             onClick={() => setIsOpen((v) => !v)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="md:hidden flex h-[34px] w-[38px] flex-none items-center justify-center rounded-lg border"
+            className="min-[980px]:hidden flex h-[34px] w-[38px] flex-none items-center justify-center rounded-lg border"
             style={{
               borderColor: "var(--pg-line)",
               background: "var(--pg-surface-2)",
@@ -92,7 +92,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="md:hidden border-t px-[22px] py-3.5 flex flex-col gap-3.5 text-[15px]"
+          className="min-[980px]:hidden border-t px-[22px] py-3.5 flex flex-col gap-3.5 text-[15px]"
           style={{ borderColor: "var(--pg-line)", background: "var(--pg-bg)" }}
         >
           {NAV_ITEMS.map((item) => (

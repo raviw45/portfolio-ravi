@@ -37,7 +37,7 @@ const Services = () => {
           </span>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 min-[660px]:grid-cols-2 min-[980px]:grid-cols-3 gap-4">
           {SERVICES.map(({ icon: Icon, title, description }, i) => (
             <Reveal
               key={title}

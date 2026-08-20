@@ -83,7 +83,7 @@ const Hero = () => {
         initial="hidden"
         animate="visible"
         variants={stagger}
-        className="max-w-[1180px] mx-auto relative grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-8 md:gap-12 items-center"
+        className="max-w-[1180px] mx-auto relative grid grid-cols-1 min-[980px]:grid-cols-[1.05fr_0.95fr] gap-8 min-[980px]:gap-12 items-center"
       >
         <div>
           <motion.div
@@ -177,7 +177,7 @@ const Hero = () => {
 
         <motion.div
           variants={item}
-          className="relative flex items-center justify-center min-h-[300px] sm:min-h-[340px] md:min-h-[420px]"
+          className="relative flex items-center justify-center min-h-[300px] min-[660px]:min-h-[340px] min-[980px]:min-h-[420px]"
         >
           <div
             aria-hidden="true"
@@ -213,7 +213,7 @@ const Hero = () => {
               animation: "pg-pulse 6s ease-in-out infinite",
             }}
           />
-          <div className="w-full h-[300px] sm:h-[340px] md:h-[440px]">
+          <div className="w-full h-[300px] min-[660px]:h-[340px] min-[980px]:h-[440px]">
             <TechOrb />
           </div>
           <div

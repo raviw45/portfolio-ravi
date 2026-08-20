@@ -62,7 +62,7 @@ const ContactMe: React.FC = () => {
           className="absolute -top-36 -left-[90px] w-[420px] h-[420px] rounded-full pointer-events-none"
           style={{ background: "radial-gradient(circle,var(--pg-glow),transparent 70%)", filter: "blur(24px)" }}
         />
-        <div className="grid md:grid-cols-2 gap-11 relative">
+        <div className="grid grid-cols-1 min-[980px]:grid-cols-2 gap-11 relative">
           <div>
             <Reveal>
               <h2

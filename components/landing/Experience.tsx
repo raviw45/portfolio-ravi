@@ -28,7 +28,7 @@ const ExperienceTimeline = () => {
 
         <div className="flex flex-col gap-[26px]">
           {experience.map((role) => (
-            <Reveal key={role.company} className="relative pl-[22px] sm:pl-[38px]">
+            <Reveal key={role.company} className="relative pl-[22px] min-[660px]:pl-[38px]">
               <span
                 className="absolute left-0 top-0 bottom-[-26px] w-px"
                 style={{ background: "linear-gradient(180deg,var(--pg-accent),var(--pg-line) 55%,transparent)" }}
