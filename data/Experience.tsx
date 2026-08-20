@@ -1,56 +1,59 @@
-import { FaBriefcase, FaJava, FaReact, FaAws } from "react-icons/fa";
-import {
-  SiSpringboot,
-  SiNextdotjs,
-  SiRedux,
-  SiTailwindcss,
-  SiApachekafka,
-  SiRedis,
-  SiNodedotjs,
-} from "react-icons/si";
+export type ExperienceEntry = {
+  initials: string;
+  title: string;
+  company: string;
+  dateRange: string;
+  location: string;
+  summary: string;
+  metrics: { value: string; label: string }[];
+  points: string[];
+  tags: string[];
+};
 
-export const timelineData = [
+export const experience: ExperienceEntry[] = [
   {
+    initials: "TG",
     title: "Software Engineer",
-    company: "Vionsys IT Solutions India Pvt. Ltd.",
-    date: "April 2024 – Present",
-    location: "Pune, India",
-    icon: <FaBriefcase className="text-white text-lg" />,
+    company: "Traveazy Group",
+    dateRange: "Feb 2026 — Present",
+    location: "Pune, India · Current",
+    summary:
+      "Building an AI-powered, multi-tenant travel SaaS platform end to end — product front-end, onboarding, and the agentic automation behind it.",
+    metrics: [
+      { value: "+30%", label: "Engagement" },
+      { value: "−50%", label: "Manual work" },
+      { value: "−35%", label: "Duplication" },
+      { value: "30–40%", label: "Faster delivery" },
+    ],
     points: [
-      "Built secure REST APIs using Spring Boot, Spring Security, and Hibernate.",
-      "Developed responsive UIs with React.js, Next.js, and managed state using Redux & React Query.",
-      "Integrated Kafka and Redis for real-time processing and performance optimization.",
-      "Deployed scalable apps on AWS (EC2, ECS, ECR, Amplify) using Docker and Jenkins CI/CD.",
+      "Shipped production AI-powered SaaS features in Next.js, React, Tailwind and shadcn/ui.",
+      "Consolidated registration, authentication and account setup into one guided Clerk flow, replacing multi-step manual onboarding.",
+      "Built Agentic AI workflows and RAG pipelines on OpenAI models, integrated through Cursor AI and MCP servers.",
+      "Structured delivery around a two-model Claude workflow — Opus for architecture, Sonnet for implementation.",
+      "Architected TurboRepo monorepos with shared UI packages, plus AWS Lambda pipelines for automated PDF extraction.",
     ],
-    skills: [
-      { Icon: FaReact, color: "#61DAFB" },
-      { Icon: SiNextdotjs, color: "#000000" },
-      { Icon: SiNodedotjs, color: "#339933" },
-      { Icon: FaJava, color: "#007396" },
-      { Icon: SiSpringboot, color: "#6DB33F" },
-      { Icon: SiApachekafka, color: "#231F20" },
-      { Icon: SiRedis, color: "#DC382D" },
-      { Icon: FaAws, color: "#FF9900" },
-    ],
+    tags: ["Next.js", "TypeScript", "LangChain / RAG", "MCP", "TurboRepo", "Clerk", "AWS Lambda"],
   },
   {
-    title: "Web Development Intern",
+    initials: "VI",
+    title: "Software Engineer",
     company: "Vionsys IT Solutions India Pvt. Ltd.",
-    date: "Feb 2024 – April 2024",
-    location: "Pune, India",
-    icon: <FaBriefcase className="text-white text-lg" />,
+    dateRange: "Feb 2024 — Jan 2026",
+    location: "Pune, India · 2 years",
+    summary:
+      "Delivered client platforms across three domains — CRM, education and construction — from first component to production deployment.",
+    metrics: [
+      { value: "3", label: "Platform types" },
+      { value: "10–20%", label: "Faster loads" },
+      { value: "−45%", label: "Release time" },
+      { value: "1", label: "Team of the Quarter" },
+    ],
     points: [
-      "Created dynamic UIs with React.js, Redux, and Tailwind CSS for cross-browser compatibility.",
-      "Built modern landing pages with responsive design and pixel-perfect implementation.",
-      "Followed security best practices to prevent XSS/CSRF and improve frontend performance.",
-      "Collaborated on projects using Git, GitHub, and Jira in an agile environment.",
+      "Built high-performance React and Next.js interfaces with Tailwind and shadcn/ui for client-facing applications.",
+      "Integrated 10–20 REST endpoints across Node.js, MongoDB, PostgreSQL and Prisma services with backend teams.",
+      "Configured GitHub Actions CI/CD, containerised with Docker and supported production deploys on AWS.",
+      "Followed security best practice — XSS/CSRF hardening, JWT auth and role-based access control.",
     ],
-    skills: [
-      { Icon: FaReact, color: "#61DAFB" },
-      { Icon: SiNextdotjs, color: "#000000" },
-      { Icon: SiNodedotjs, color: "#339933" },
-      { Icon: SiRedux, color: "#764ABC" },
-      { Icon: SiTailwindcss, color: "#38B2AC" },
-    ],
+    tags: ["React", "Node.js", "PostgreSQL", "Prisma", "Docker", "GitHub Actions", "AWS"],
   },
 ];

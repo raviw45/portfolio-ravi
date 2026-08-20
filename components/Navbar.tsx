@@ -3,132 +3,108 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggler from "./theme-toggle";
+
+const NAV_ITEMS = [
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
+  { label: "Experience", id: "experience" },
+  { label: "Projects", id: "projects" },
+  { label: "Writing", href: "/blogs" },
+  { label: "Contact", id: "contact" },
+];
 
 const Navbar = () => {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const ticking = useRef(false);
-  const recentlyClicked = useRef(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!ticking.current) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-
-          if (!recentlyClicked.current) {
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
-              setShowNavbar(false);
-            } else {
-              setShowNavbar(true);
-            }
-          }
-
-          setLastScrollY(currentScrollY);
-          ticking.current = false;
-        });
-
-        ticking.current = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  // Reset `recentlyClicked` after short delay
-  const handleLinkClick = () => {
-    setIsOpen(false);
-    recentlyClicked.current = true;
-    setTimeout(() => {
-      recentlyClicked.current = false;
-    }, 1000); // 1 second delay prevents scroll-triggered hide
+  const getHref = (item: (typeof NAV_ITEMS)[number]) => {
+    if (item.href) return item.href;
+    return isHome ? `#${item.id}` : `/#${item.id}`;
   };
 
-  const navLinks = ["Home", "About", "Experience", "Blogs", "Contact"];
-
-  const getLinkHref = (item: string) => {
-    const lower = item.toLowerCase();
-    if (lower === "blogs") return "/blogs";
-    if (lower === "home") return "/";
-    return isHome ? `#${lower}` : `/#${lower}`;
-  };
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <header
-      className={`w-full fixed top-0 left-0 z-50 backdrop-blur-lg transition-all duration-300 ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className="fixed top-0 left-0 right-0 z-[60] backdrop-blur-lg border-b"
       style={{
-        backgroundColor:
-          lastScrollY > 20
-            ? "var(--background)"
-            : "rgba(var(--background-rgb), 0.4)",
-        color: "var(--foreground)",
+        background: "color-mix(in srgb, var(--pg-bg) 82%, transparent)",
+        borderColor: "var(--pg-line)",
+        color: "var(--pg-text)",
       }}
     >
-      <div className="w-[95%] md:w-[85%] mx-auto flex justify-between items-center h-20">
-        {/* Logo */}
-        <div className="order-1 flex items-center gap-2">
+      <div className="max-w-[1180px] mx-auto px-[22px] h-[70px] flex items-center justify-between gap-4">
+        <Link
+          href={isHome ? "#top" : "/"}
+          className="flex items-center gap-2.5"
+          style={{ color: "var(--pg-text)" }}
+        >
           <Image
             src="/image/logo.png"
-            title="logo"
-            alt="Logo"
-            width={50}
-            height={50}
-            className="rounded-full"
+            alt="Ravikant Waghmare"
+            width={34}
+            height={34}
+            className="rounded-full block"
           />
-        </div>
+          <span className="text-[15px] font-semibold tracking-tight">
+            Ravikant Waghmare
+          </span>
+        </Link>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex gap-8 text-gray-700 dark:text-gray-100 text-md tracking-wider font-medium transition-colors duration-300 order-2">
-          {navLinks.map((item) => (
-            <Link
-              key={item}
-              href={getLinkHref(item)}
-              className="relative group cursor-pointer"
-              onClick={handleLinkClick}
-            >
-              {item}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:w-full transition-all duration-300" />
-            </Link>
-          ))}
-        </nav>
-
-        {/* Theme toggle and mobile toggler */}
-        <div className="flex items-center gap-4 md:gap-0 order-2 md:order-3">
-          <ThemeToggler />
-          <button
-            className="md:hidden text-gray-700 dark:text-gray-100"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+        <nav className="flex items-center gap-6">
+          <div
+            className="hidden md:flex gap-6 text-sm"
+            style={{ color: "var(--pg-muted)" }}
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Nav Links */}
-      {isOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 shadow-md animate-slideDown">
-          <nav className="flex flex-col gap-4 px-6 py-4 text-gray-700 dark:text-gray-100 text-md tracking-wider font-medium">
-            {navLinks.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <Link
-                key={item}
-                href={getLinkHref(item)}
-                className="hover:text-indigo-500 transition-colors"
-                onClick={handleLinkClick}
+                key={item.label}
+                href={getHref(item)}
+                className="transition-colors hover:text-[var(--pg-accent)]"
+                style={{ color: "var(--pg-muted)" }}
               >
-                {item}
+                {item.label}
               </Link>
             ))}
-          </nav>
+          </div>
+
+          <ThemeToggler />
+
+          <button
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="md:hidden flex h-[34px] w-[38px] flex-none items-center justify-center rounded-lg border"
+            style={{
+              borderColor: "var(--pg-line)",
+              background: "var(--pg-surface-2)",
+              color: "var(--pg-text)",
+            }}
+          >
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </nav>
+      </div>
+
+      {isOpen && (
+        <div
+          className="md:hidden border-t px-[22px] py-3.5 flex flex-col gap-3.5 text-[15px]"
+          style={{ borderColor: "var(--pg-line)", background: "var(--pg-bg)" }}
+        >
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.label}
+              href={getHref(item)}
+              onClick={closeMenu}
+              style={{ color: "var(--pg-text)" }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       )}
     </header>

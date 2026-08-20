@@ -1,175 +1,230 @@
 "use client";
 
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Button from "../common/button";
 import { Download, Mail } from "lucide-react";
-import Link from "next/link";
-import AnimatedBlog from "../common/animated-blob";
 import { motion } from "framer-motion";
-import { fadeUpVariant } from "@/config/framer";
+import dynamic from "next/dynamic";
 
-const typingWords = [
-  "MERN Stack Developer",
-  "Full Stack Developer",
-  "Full Stack Java Developer",
-  "React Developer",
-  "Frontend Developer",
+const TechOrb = dynamic(() => import("./TechOrb"), { ssr: false });
+
+const WORDS = [
+  "Full Stack Software Engineer",
+  "Agentic AI & RAG Systems",
+  "React · Next.js · TypeScript",
+  "Node.js · Spring Boot · AWS",
 ];
 
-const Hero = () => {
-  const [text, setText] = useState("");
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [speed] = useState(150);
+const CHIPS = ["React", "Next.js", "TypeScript", "Node.js", "Spring Boot", "LangChain / RAG", "AWS"];
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
+};
+
+function useTypedLoop(words: string[]) {
+  const [typed, setTyped] = useState("");
 
   useEffect(() => {
-    const currentWord = typingWords[wordIndex];
-    let timeout: NodeJS.Timeout;
+    let w = 0;
+    let i = 0;
+    let deleting = false;
+    let timeout: ReturnType<typeof setTimeout>;
 
-    if (!isDeleting && text.length < currentWord.length) {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
-      }, speed);
-    } else if (isDeleting && text.length > 0) {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-      }, speed / 2);
-    } else if (!isDeleting && text.length === currentWord.length) {
-      timeout = setTimeout(() => {
-        setIsDeleting(true);
-      }, 2000);
-    } else if (isDeleting && text.length === 0) {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % typingWords.length);
-    }
+    const step = () => {
+      const word = words[w];
+      if (!deleting) {
+        i++;
+        if (i > word.length) {
+          deleting = true;
+          setTyped(word);
+          timeout = setTimeout(step, 1600);
+          return;
+        }
+      } else {
+        i--;
+        if (i <= 0) {
+          deleting = false;
+          w = (w + 1) % words.length;
+          i = 0;
+        }
+      }
+      setTyped(word.slice(0, i));
+      timeout = setTimeout(step, deleting ? 34 : 62);
+    };
 
+    timeout = setTimeout(step, 400);
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex, speed]);
+  }, [words]);
+
+  return typed;
+}
+
+const Hero = () => {
+  const typed = useTypedLoop(WORDS);
 
   return (
-    <main
-      id="hero"
-      style={{
-        backgroundColor: "var(--background)",
-        color: "var(--foreground)",
-      }}
-      className="flex items-center w-full min-h-[calc(100vh-5rem)] not-even:not-last:scroll-mt-20"
-    >
-      <section className="w-[95%] md:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-4">
-        {/* Left side */}
-        <motion.div
-          className="flex flex-col justify-center space-y-4"
-          initial="hidden"
-          animate="visible"
-          variants={fadeUpVariant}
-          custom={0}
-        >
-          <motion.div variants={fadeUpVariant} custom={0.1}>
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide leading-snug sm:leading-tight md:leading-tight lg:leading-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
-              I&apos;m <span>Ravikant Waghmare</span>
-            </h1>
+    <section id="top" className="relative pt-[132px] pb-[84px] px-[22px]">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div
+          className="absolute -top-40 -right-28 w-[620px] h-[620px] rounded-full pg-motion-safe"
+          style={{
+            background: "radial-gradient(circle, var(--pg-glow), transparent 68%)",
+            filter: "blur(30px)",
+            animation: "pg-drift 18s ease-in-out infinite",
+          }}
+        />
+      </div>
 
-            <h2 className="text-lg md:text-2xl font-bold tracking-wide mt-2 leading-snug md:leading-snug text-indigo-600 dark:text-indigo-300">
-              I am a {text}
-              <span className="inline-block w-1 h-6 bg-indigo-600 dark:bg-indigo-300 animate-blink ml-1 align-bottom"></span>
-            </h2>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={stagger}
+        className="max-w-[1180px] mx-auto relative grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-8 md:gap-12 items-center"
+      >
+        <div>
+          <motion.div
+            variants={item}
+            className="inline-flex items-center gap-[9px] px-[13px] py-1.5 rounded-full border text-[12.5px] mb-[22px]"
+            style={{
+              borderColor: "var(--pg-line)",
+              background: "var(--pg-accent-soft)",
+              color: "var(--pg-accent-ink)",
+              letterSpacing: ".02em",
+            }}
+          >
+            <span
+              className="w-[7px] h-[7px] rounded-full"
+              style={{ background: "#4ec98a", boxShadow: "0 0 0 3px rgba(78,201,138,.18)" }}
+            />
+            Open to Full Stack / AI engineering roles
+          </motion.div>
+
+          <motion.h1
+            variants={item}
+            className="font-semibold tracking-[-0.03em] leading-[1.05] mb-3.5"
+            style={{ fontSize: "clamp(34px,5vw,58px)" }}
+          >
+            Ravikant Waghmare
+          </motion.h1>
+
+          <motion.div
+            variants={item}
+            className="font-mono mb-5 min-h-[1.6em] text-[var(--pg-accent)]"
+            style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", fontSize: "clamp(15px,2.1vw,21px)" }}
+          >
+            <span className="text-[var(--pg-faint)]">&gt;&nbsp;</span>
+            {typed}
+            <span
+              className="inline-block w-[9px] ml-[3px] align-[-2px] bg-[var(--pg-accent)]"
+              style={{ height: "1.05em", animation: "pg-caret 1s step-end infinite" }}
+            />
           </motion.div>
 
           <motion.p
-            className="text-base sm:text-md text-gray-700 dark:text-gray-300"
-            variants={fadeUpVariant}
-            custom={0.2}
+            variants={item}
+            className="text-[16.5px] leading-[1.65] max-w-[56ch] mb-[26px] text-[var(--pg-muted)]"
           >
-            Software Engineer with 2+ years of experience delivering scalable,
-            secure, and SEO-optimized applications using React, Next.js,
-            Node.js, and Spring Boot. Experienced in microservices architecture,
-            cloud solutions on AWS, and DevOps automation.
+            Full Stack Software Engineer with{" "}
+            <strong className="font-semibold text-[var(--pg-text)]">3+ years</strong> shipping
+            AI-powered SaaS in React, Next.js, Node.js and TypeScript. I build Agentic AI
+            workflows and RAG pipelines with LangChain and OpenAI, architect TurboRepo
+            monorepos, and deploy on AWS.
           </motion.p>
 
-          <motion.div
-            className="pt-2 flex flex-wrap gap-4"
-            variants={fadeUpVariant}
-            custom={0.3}
-          >
-            <Link href="/Ravikant_Waghmare_Resume.pdf" download>
-              <Button icon={<Download size={20} />} size="lg">
-                Download CV
-              </Button>
-            </Link>
-            <Link href="mailto:ravikantwaghmare82@gmail.com">
-              <Button icon={<Mail size={20} />} size="lg">
-                Connect
-              </Button>
-            </Link>
+          <motion.div variants={item} className="flex flex-wrap gap-3 mb-7">
+            <a
+              href="/Ravikant_Waghmare_Resume.pdf"
+              download
+              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:bg-[var(--pg-accent-soft)] hover:text-[var(--pg-accent-ink)]"
+              style={{ borderColor: "var(--pg-accent)", color: "var(--pg-accent)" }}
+            >
+              <Download size={17} /> Download CV
+            </a>
+            <a
+              href="mailto:ravikantwaghmare82@gmail.com"
+              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
+              style={{ borderColor: "var(--pg-line)", color: "var(--pg-text)" }}
+            >
+              <Mail size={17} /> Get in touch
+            </a>
+            <a
+              href="https://github.com/raviw45"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
+              style={{ borderColor: "var(--pg-line)", color: "var(--pg-text)" }}
+            >
+              GitHub
+            </a>
           </motion.div>
 
-          <motion.div
-            className="flex flex-wrap justify-center md:justify-start gap-3 pt-2"
-            variants={fadeUpVariant}
-            custom={0.4}
-          >
-            {[
-              "React",
-              "Next.js",
-              "Redux",
-              "Node.js",
-              "TypeScript",
-              "Java",
-              "Spring Boot",
-            ].map((skill) => (
+          <motion.div variants={item} className="flex flex-wrap gap-2">
+            {CHIPS.map((chip) => (
               <span
-                key={skill}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium"
+                key={chip}
+                className="px-[11px] py-[5px] rounded-full border text-[12.5px] text-[var(--pg-muted)]"
+                style={{ borderColor: "var(--pg-line)", background: "var(--pg-surface-2)" }}
               >
-                {skill}
+                {chip}
               </span>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Right side */}
         <motion.div
-          className="relative flex justify-center items-center w-full h-full"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
+          variants={item}
+          className="relative flex items-center justify-center min-h-[300px] sm:min-h-[340px] md:min-h-[420px]"
         >
-          {/* Animated blob */}
-          <AnimatedBlog css={"w-full h-full"} />
-
-          {/* Image */}
-          <div className="relative z-10 w-full">
-            <Image
-              src="/image/portfolioHeaderImg.png"
-              title="Ravikant Waghmare"
-              alt="Ravikant Waghmare"
-              width={1000}
-              height={1000}
-              className="w-full h-auto rounded-lg object-cover hover:scale-[1.02] transition-transform duration-500"
-              priority
-            />
+          <div
+            aria-hidden="true"
+            className="absolute rounded-full pointer-events-none pg-motion-safe"
+            style={{
+              width: "min(78%,420px)",
+              aspectRatio: "1",
+              border: "1px solid var(--pg-line)",
+              borderTopColor: "var(--pg-accent)",
+              borderRightColor: "transparent",
+              borderBottomColor: "transparent",
+              animation: "pg-ring 22s linear infinite",
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute rounded-full pointer-events-none pg-motion-safe"
+            style={{
+              width: "min(58%,320px)",
+              aspectRatio: "1",
+              border: "1px dashed var(--pg-line)",
+              animation: "pg-ring 34s linear infinite reverse",
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="absolute rounded-full pointer-events-none pg-motion-safe"
+            style={{
+              width: "min(64%,340px)",
+              aspectRatio: "1",
+              background: "radial-gradient(circle,var(--pg-glow),transparent 66%)",
+              filter: "blur(18px)",
+              animation: "pg-pulse 6s ease-in-out infinite",
+            }}
+          />
+          <div className="w-full h-[300px] sm:h-[340px] md:h-[440px]">
+            <TechOrb />
+          </div>
+          <div
+            className="absolute bottom-0.5 left-1/2 -translate-x-1/2 text-[11.5px] uppercase pointer-events-none text-[var(--pg-faint)]"
+            style={{ letterSpacing: ".06em" }}
+          >
+            Drag to rotate the stack
           </div>
         </motion.div>
-      </section>
-
-      <style jsx>{`
-        @keyframes blink {
-          0%,
-          50%,
-          100% {
-            opacity: 1;
-          }
-          25%,
-          75% {
-            opacity: 0;
-          }
-        }
-        .animate-blink {
-          animation: blink 1s step-start infinite;
-        }
-      `}</style>
-    </main>
+      </motion.div>
+    </section>
   );
 };
 
