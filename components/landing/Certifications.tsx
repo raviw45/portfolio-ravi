@@ -1,98 +1,72 @@
-"use client";
-
+import React from "react";
 import Image from "next/image";
-import { useState } from "react";
-import Button from "../common/button";
+import { Award } from "lucide-react";
+import Reveal from "./Reveal";
 
-const certifications = [
+const CERTS = [
   {
-    name: "Namaste React Course: Namastedev.com",
-    image: "/certificates/certificate.webp",
-  },
-  {
-    name: "Socon Application Testing",
-    image: "/certificates/socon-app-testing.jpeg",
-  },
-  {
-    name: "Udemy Jira Course",
-    image: "/certificates/udemy-jira-certificate.jpg",
-  },
-  {
-    name: "CDAC Course Completion",
     image: "/certificates/cdac-certificate.jpeg",
+    title: "PG-DAC",
+    subtitle: "CDAC Bengaluru · 2023",
+  },
+  {
+    image: "/certificates/udemy-jira-certificate.jpg",
+    title: "Jira & Agile delivery",
+    subtitle: "Udemy",
+  },
+  {
+    image: "/certificates/socon-app-testing.jpeg",
+    title: "Application testing",
+    subtitle: "SoCon",
   },
 ];
 
 export default function Certifications() {
-  const [selected, setSelected] = useState<null | (typeof certifications)[0]>(
-    null
-  );
-
   return (
-    <section
-      style={{
-        backgroundColor: "var(--background)",
-        color: "var(--foreground)",
-      }}
-      className="md:py-20 py-8 scroll-mt-20 overflow-x-hidden"
-    >
-      <div className="w-[95%] md:w-[85%] mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
-          Certificates
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-          {certifications.map((cert, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center gap-3 cursor-pointer group"
-              onClick={() => setSelected(cert)}
-            >
-              <div className="relative w-full h-64 sm:h-72 md:h-80 rounded-md overflow-hidden shadow-md border border-gray-200 bg-white group-hover:shadow-lg">
-                <Image
-                  src={cert.image}
-                  alt={cert.name}
-                  fill
-                  className="object-contain p-3 transition-all duration-300 group-hover:scale-[1.02]"
-                />
-              </div>
-              <p className="text-indigo-600 font-semibold text-center text-sm sm:text-base">
-                {cert.name}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section id="certifications" className="px-[22px] pb-24">
+      <div className="max-w-[1180px] mx-auto">
+        <Reveal className="flex items-center gap-3 mb-[26px]">
+          <span className="w-[26px] h-0.5 rounded-sm bg-[var(--pg-accent)]" />
+          <span className="text-xs uppercase text-[var(--pg-faint)]" style={{ letterSpacing: ".14em" }}>
+            Certifications &amp; awards
+          </span>
+        </Reveal>
 
-        {/* Centered Modal */}
-        {selected && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
-            onClick={() => setSelected(null)}
-          >
-            <div
-              className="bg-white rounded-md shadow-lg w-[95vw] sm:w-[90vw] max-w-3xl mx-auto"
-              onClick={(e) => e.stopPropagation()}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {CERTS.map((cert, i) => (
+            <Reveal
+              key={cert.title}
+              delay={i * 0.06}
+              className="rounded-[14px] border overflow-hidden"
+              style={{ borderColor: "var(--pg-line)", background: "var(--pg-surface-2)" }}
             >
-              <div className="relative w-full max-h-[80vh] overflow-auto">
-                <Image
-                  src={selected.image}
-                  alt={selected.name}
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto object-contain rounded-t-md"
-                />
+              <div className="relative h-[150px]">
+                <Image src={cert.image} alt={cert.title} fill className="object-cover" />
               </div>
-              <div className="p-4 text-center flex flex-col items-center">
-                <p className="text-indigo-600 font-semibold">{selected.name}</p>
-                <Button
-                  onClick={() => setSelected(null)}
-                  className="mt-4 text-sm text-center"
-                >
-                  Close
-                </Button>
+              <div className="p-3.5">
+                <div className="text-[14.5px] font-semibold mb-[3px]">{cert.title}</div>
+                <div className="text-[13px] text-[var(--pg-muted)]">{cert.subtitle}</div>
               </div>
+            </Reveal>
+          ))}
+
+          <Reveal
+            delay={CERTS.length * 0.06}
+            className="rounded-[14px] border p-5 flex flex-col justify-center"
+            style={{
+              borderColor: "var(--pg-line)",
+              background: "linear-gradient(150deg,var(--pg-accent-soft),var(--pg-surface-2))",
+            }}
+          >
+            <div className="mb-2.5 text-[var(--pg-accent)]">
+              <Award size={26} />
             </div>
-          </div>
-        )}
+            <div className="text-[15px] font-semibold mb-1">Team of the Quarter</div>
+            <div className="text-[13px] leading-[1.5] text-[var(--pg-muted)]">
+              Awarded for engineering contribution and delivery impact at Vionsys IT Solutions.
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -1,114 +1,117 @@
 "use client";
-import { timelineData } from "@/data/Experience";
-import { motion } from "framer-motion";
+
 import React from "react";
+import { Check } from "lucide-react";
+import { experience } from "@/data/Experience";
+import Reveal from "./Reveal";
 
 const ExperienceTimeline = () => {
   return (
-    <section
-      style={{
-        backgroundColor: "var(--background)",
-        color: "var(--foreground)",
-      }}
-      id="experience"
-      className="md:py-20 py-8 overflow-hidden scroll-mt-20"
-    >
-      <div className="w-[95%] md:w-[85%] mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
-          My Experience
-        </h2>
-        <div className="relative mx-auto">
-          {/* Center Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-indigo-400 via-purple-500 to-pink-500 z-0" />
+    <section id="experience" className="relative px-[22px] pb-24 overflow-visible">
+      <div
+        aria-hidden="true"
+        className="absolute top-[10%] -right-24 w-[340px] h-[340px] pointer-events-none pg-motion-safe"
+        style={{
+          background: "radial-gradient(circle,var(--pg-glow),transparent 70%)",
+          filter: "blur(44px)",
+          borderRadius: "50% 50% 38% 62%/62% 38% 62% 38%",
+          animation: "pg-blob-drift 22s ease-in-out infinite",
+        }}
+      />
+      <div className="max-w-[1180px] mx-auto relative">
+        <Reveal className="flex items-center gap-3 mb-[34px]">
+          <span className="w-[26px] h-0.5 rounded-sm bg-[var(--pg-accent)]" />
+          <span className="text-xs uppercase text-[var(--pg-faint)]" style={{ letterSpacing: ".14em" }}>
+            Experience
+          </span>
+        </Reveal>
 
-          <div className="space-y-20 relative z-10">
-            {timelineData.map((item, index) => {
-              const isLeft = index % 2 === 0;
-              const SkillIcons = item.skills.map(({ Icon, color }, i) => (
+        <div className="flex flex-col gap-[26px]">
+          {experience.map((role) => (
+            <Reveal key={role.company} className="relative pl-[22px] sm:pl-[38px]">
+              <span
+                className="absolute left-0 top-0 bottom-[-26px] w-px"
+                style={{ background: "linear-gradient(180deg,var(--pg-accent),var(--pg-line) 55%,transparent)" }}
+              />
+              <span
+                className="absolute -left-[6px] top-[26px] w-[13px] h-[13px] rounded-full border-2"
+                style={{
+                  background: "var(--pg-bg)",
+                  borderColor: "var(--pg-accent)",
+                  boxShadow: "0 0 0 5px var(--pg-accent-soft)",
+                }}
+              />
+              <div
+                className="rounded-[28px_16px_28px_16px] border overflow-hidden backdrop-blur-[8px] transition-transform hover:-translate-y-1 hover:border-[var(--pg-accent)]"
+                style={{ borderColor: "var(--pg-line)", background: "var(--pg-surface-2)" }}
+              >
                 <div
-                  key={i}
-                  className="w-10 h-10 rounded-full flex items-center justify-center shadow-md"
-                  style={{
-                    backgroundColor: "#fff",
-                    color: color,
-                    border: `2px solid ${color}`,
-                  }}
-                >
-                  <Icon className="text-xl" />
-                </div>
-              ));
-
-              return (
-                <div
-                  key={index}
-                  className="relative flex flex-col md:flex-row items-center justify-between"
-                >
-                  {isLeft && (
-                    <div className="md:w-5/12 w-full px-6">
-                      <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="bg-indigo-50 dark:bg-gray-800 p-6 rounded-xl shadow-xl relative"
+                  className="h-1"
+                  style={{ background: "linear-gradient(90deg,var(--pg-accent),transparent 80%)" }}
+                />
+                <div className="px-6 pt-6 pb-[22px]">
+                  <div className="flex flex-wrap items-start justify-between gap-3.5 mb-1.5">
+                    <div className="flex items-center gap-[13px]">
+                      <span
+                        className="w-[42px] h-[42px] rounded-[11px] border flex items-center justify-center text-[15px] font-semibold flex-none text-[var(--pg-accent)]"
+                        style={{ borderColor: "var(--pg-line)", background: "var(--pg-accent-soft)" }}
                       >
-                        {/* Connecting Line */}
-                        <div className="absolute right-[-110px] top-1/2 transform -translate-y-1/2 h-1 w-28 bg-indigo-600" />
-                        <h3 className="text-xl font-semibold text-indigo-700 dark:text-indigo-300">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {item.company}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 italic mb-3">
-                          {item.date} | {item.location}
-                        </p>
-                        <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1 mb-3">
-                          {item.points.map((point, i) => (
-                            <li key={i}>{point}</li>
-                          ))}
-                        </ul>
-                        <div className="flex gap-2 flex-wrap">{SkillIcons}</div>
-                      </motion.div>
+                        {role.initials}
+                      </span>
+                      <div>
+                        <h3 className="text-xl font-semibold tracking-[-0.02em]">{role.title}</h3>
+                        <div className="text-sm mt-[3px] text-[var(--pg-accent)]">{role.company}</div>
+                      </div>
                     </div>
-                  )}
-
-                  {/* Timeline Icon */}
-                  <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white z-20 shadow-lg relative">
-                    {item.icon}
+                    <div className="text-right">
+                      <div className="font-mono text-[12.5px]">{role.dateRange}</div>
+                      <div className="text-xs mt-[3px] text-[var(--pg-faint)]">{role.location}</div>
+                    </div>
                   </div>
-
-                  {!isLeft && (
-                    <div className="md:w-5/12 w-full px-6">
-                      <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="bg-indigo-50 dark:bg-gray-800 p-6 rounded-xl shadow-xl relative"
+                  <p className="text-[15.5px] leading-[1.7] my-3 mb-[18px] max-w-[66ch] opacity-90">
+                    {role.summary}
+                  </p>
+                  <div
+                    className="flex flex-wrap gap-[26px] py-4 mb-4 border-y"
+                    style={{ borderColor: "var(--pg-line)" }}
+                  >
+                    {role.metrics.map((m) => (
+                      <div key={m.label} className="flex flex-col gap-0.5 pr-[22px]">
+                        <span className="text-[22px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--pg-accent)]">
+                          {m.value}
+                        </span>
+                        <span
+                          className="text-xs font-medium uppercase text-[var(--pg-muted)]"
+                          style={{ letterSpacing: ".06em" }}
+                        >
+                          {m.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <ul className="flex flex-col gap-[11px] text-[15px] leading-[1.65] mb-[18px]">
+                    {role.points.map((point) => (
+                      <li key={point} className="flex gap-2.5 items-start">
+                        <Check size={14} className="flex-none mt-[5px] text-[var(--pg-accent)]" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-[7px]">
+                    {role.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1.5 rounded-full border text-[12.5px] font-medium"
+                        style={{ borderColor: "var(--pg-line)", background: "var(--pg-bg2)" }}
                       >
-                        {/* Connecting Line */}
-                        <div className="absolute left-[-110px] top-1/2 transform -translate-y-1/2 h-1 w-28 bg-indigo-600" />
-                        <h3 className="text-xl font-semibold text-indigo-700 dark:text-indigo-300">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {item.company}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 italic mb-3">
-                          {item.date} | {item.location}
-                        </p>
-                        <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300 space-y-1 mb-3">
-                          {item.points.map((point, i) => (
-                            <li key={i}>{point}</li>
-                          ))}
-                        </ul>
-                        <div className="flex gap-2 flex-wrap">{SkillIcons}</div>
-                      </motion.div>
-                    </div>
-                  )}
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
