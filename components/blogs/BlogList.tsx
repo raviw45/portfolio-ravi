@@ -20,24 +20,21 @@ export default function BlogList() {
         backgroundColor: "var(--background)",
         color: "var(--foreground)",
       }}
-      className="py-24 md:min-h-screen"
+      className="py-16 sm:py-24 md:min-h-screen"
     >
       <div className="w-[95%] md:w-[85%] mx-auto max-w-7xl">
         <h1 className="text-3xl sm:text-4xl text-center font-bold mb-4 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
           Latest Tech Blogs
         </h1>
 
-        <div
-          className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 space-y-6"
-          style={{ columnFill: "balance" }}
-        >
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {sortedBlogs.map((blog) => (
             <article
               key={blog.id}
-              className="break-inside-avoid bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 ring-2 ring-indigo-400 p-6 flex flex-col justify-between max-h-[350px]"
+              className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 ring-2 ring-indigo-400 p-5 sm:p-6 flex flex-col justify-between max-h-[350px]"
             >
               <div>
-                <h2 className="text-center text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-3 hover:text-indigo-500 transition-colors duration-200 min-h-[3.5rem] leading-tight overflow-hidden line-clamp-2">
+                <h2 className="text-center text-xl sm:text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mb-3 hover:text-indigo-500 transition-colors duration-200 min-h-[3.5rem] leading-tight overflow-hidden line-clamp-2">
                   <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
                 </h2>
 
@@ -46,11 +43,13 @@ export default function BlogList() {
                 </p>
               </div>
 
-              <footer className="flex justify-between items-center bg-indigo-200 dark:bg-indigo-800 rounded-full px-4 py-2 text-sm text-indigo-900 dark:text-indigo-100 font-mono tracking-wide select-none">
-                <span>
+              <footer className="flex items-center justify-between gap-2 bg-indigo-200 dark:bg-indigo-800 rounded-full px-4 py-2 text-xs sm:text-sm text-indigo-900 dark:text-indigo-100 font-mono tracking-wide select-none">
+                <span className="truncate min-w-0 flex-1">
                   By <strong>Ravikant Waghmare</strong>
                 </span>
-                <time dateTime={blog.date}>{blog.date}</time>
+                <time dateTime={blog.date} className="flex-none">
+                  {blog.date}
+                </time>
               </footer>
 
               <Link

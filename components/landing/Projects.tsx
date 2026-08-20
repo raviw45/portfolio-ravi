@@ -32,7 +32,7 @@ const ProjectsShowcase = () => {
           </a>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 min-[660px]:grid-cols-2 min-[980px]:grid-cols-3 gap-4">
           {projects.map((project, i) => (
             <Reveal
               key={project.title}

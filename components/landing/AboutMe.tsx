@@ -25,7 +25,7 @@ const AboutMe = () => {
           </span>
         </Reveal>
 
-        <div className="grid md:grid-cols-[300px_minmax(0,1fr)] gap-12 items-start">
+        <div className="grid grid-cols-1 min-[980px]:grid-cols-[300px_minmax(0,1fr)] gap-12 items-start">
           <Reveal
             className="relative w-full max-w-[300px] mx-auto pg-motion-safe"
             style={{ animation: "pg-floaty 7s ease-in-out infinite" }}
@@ -86,7 +86,7 @@ const AboutMe = () => {
               workflows, RAG pipelines over vector stores, and LLM integrations through MCP
               servers — wired into real user-facing features rather than demos.
             </Reveal>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 min-[660px]:grid-cols-2 gap-3">
               {INFO_CARDS.map((card, i) => (
                 <Reveal
                   key={card.label}

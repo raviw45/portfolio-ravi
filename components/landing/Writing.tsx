@@ -25,7 +25,7 @@ const Writing = () => {
           </span>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 min-[660px]:grid-cols-2 gap-4">
           {posts.map((post, i) => (
             <Reveal key={post.id} delay={i * 0.05}>
               <Link
