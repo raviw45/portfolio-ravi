@@ -21,7 +21,10 @@ export default function BlogDetail({ blog }: { blog: Blog }) {
   return (
     <article className="py-24 overflow-hidden scroll-mt-20">
       <div className="w-[95%] md:w-[85%] mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
+        <h1
+          className="font-bold mb-8 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent"
+          style={{ fontSize: "clamp(28px,4.5vw,40px)" }}
+        >
           {blog.title}
         </h1>
         <time

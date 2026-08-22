@@ -83,17 +83,33 @@ export default function SceneBg() {
     const host = hostRef.current;
     if (!host) return;
 
+    // Tier the scene's weight to the viewport so low-power/small devices aren't
+    // pushed to render as many particles, sprites and geometry segments as desktop.
+    const tier = innerWidth < 480 ? "xs" : innerWidth < 700 ? "sm" : innerWidth < 980 ? "md" : "lg";
+    const particleCount = { xs: 500, sm: 900, md: 1300, lg: 1800 }[tier];
+    const maxPixelRatio = { xs: 1, sm: 1.2, md: 1.5, lg: 1.6 }[tier];
+    const gridDivisions = { xs: 20, sm: 32, md: 44, lg: 52 }[tier];
+    const torusSegments = { xs: 48, sm: 70, md: 110, lg: 140 }[tier];
+    const spritesPerLogo = tier === "xs" ? 1 : tier === "sm" ? 2 : 4;
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 320);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+    const renderer = new THREE.WebGLRenderer({ antialias: tier !== "xs", alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, maxPixelRatio));
+    // setSize(w, h, false) below skips Three's own style sync, so the canvas must be
+    // told to fill its host via CSS — otherwise its width/height attributes (already
+    // scaled by devicePixelRatio) become its CSS size too, overflowing past the
+    // viewport and getting clipped by the host's overflow:hidden.
+    renderer.domElement.style.display = "block";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
     host.appendChild(renderer.domElement);
 
     const ACCENT = new THREE.Color("#a99cf0");
     const COOL = new THREE.Color("#6f86d6");
     const WARM = new THREE.Color("#d6a0e8");
 
-    const N = 1800;
+    const N = particleCount;
     const pos = new Float32Array(N * 3);
     const col = new Float32Array(N * 3);
     const siz = new Float32Array(N);
@@ -162,7 +178,7 @@ export default function SceneBg() {
     for (let i = 0; i < 3; i++) {
       const m = new THREE.MeshBasicMaterial({ color: i === 1 ? 0xc7a3ea : 0x8f9fe0, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
       ringMats.push(m);
-      const geom = new THREE.TorusGeometry(14 + i * 7, 0.09, 8, 140);
+      const geom = new THREE.TorusGeometry(14 + i * 7, 0.09, 8, torusSegments);
       ringGeoms.push(geom);
       const r = new THREE.Mesh(geom, m);
       r.rotation.set(Math.PI / 2.6 + i * 0.4, i * 0.7, i * 0.3);
@@ -202,7 +218,7 @@ export default function SceneBg() {
       return tex;
     };
     const spawn = (tex: THREE.CanvasTexture) => {
-      const per = 4;
+      const per = spritesPerLogo;
       for (let i = 0; i < per; i++) {
         const m = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.95, depthWrite: false, depthTest: false });
         const sp = new THREE.Sprite(m);
@@ -219,7 +235,7 @@ export default function SceneBg() {
       spawn(badgeCanvas(color, draw));
     });
 
-    const grid = new THREE.GridHelper(360, 52, 0xa99cf0, 0x7b86c9);
+    const grid = new THREE.GridHelper(360, gridDivisions, 0xa99cf0, 0x7b86c9);
     (grid.material as THREE.Material).transparent = true;
     (grid.material as THREE.Material).opacity = 0.2;
     (grid.material as THREE.LineBasicMaterial).blending = THREE.AdditiveBlending;

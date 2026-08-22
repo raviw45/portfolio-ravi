@@ -47,7 +47,7 @@ const Skills = () => {
                 key={t.id}
                 type="button"
                 onClick={() => setTab(t.id)}
-                className="px-[17px] py-[9px] rounded-full text-sm font-medium transition-all border"
+                className="min-h-11 px-[17px] py-[9px] rounded-full text-sm font-medium transition-all border"
                 style={{
                   borderColor: active ? "var(--pg-accent)" : "var(--pg-line)",
                   background: active ? "var(--pg-accent-soft)" : "transparent",

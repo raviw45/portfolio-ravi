@@ -6,7 +6,7 @@ import { useSendMail } from "@/utils/useSendMail";
 import Reveal from "./Reveal";
 
 const inputClass =
-  "px-[13px] py-[11px] rounded-lg border text-[14.5px] font-inherit bg-[var(--pg-bg)] text-[var(--pg-text)] border-[var(--pg-line)] focus:outline-none focus:border-[var(--pg-accent)]";
+  "min-h-11 px-[13px] py-[11px] rounded-lg border text-[14.5px] font-inherit bg-[var(--pg-bg)] text-[var(--pg-text)] border-[var(--pg-line)] focus:outline-none focus:border-[var(--pg-accent)]";
 
 const ContactMe: React.FC = () => {
   const [formData, setFormData] = useState({ fullName: "", subject: "", description: "" });
@@ -145,7 +145,7 @@ const ContactMe: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-1 px-5 py-3 rounded-lg border font-medium text-[14.5px] transition-colors hover:bg-[var(--pg-accent-soft)] disabled:opacity-60"
+                className="mt-1 min-h-11 px-5 py-3 rounded-lg border font-medium text-[14.5px] transition-colors hover:bg-[var(--pg-accent-soft)] disabled:opacity-60"
                 style={{ borderColor: "var(--pg-accent)", color: "var(--pg-accent)", background: "transparent" }}
               >
                 {loading ? "Sending…" : submitted ? "Message sent ✓" : "Send message"}

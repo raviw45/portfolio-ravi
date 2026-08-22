@@ -139,14 +139,14 @@ const Hero = () => {
             <a
               href="/Ravikant_Waghmare_Resume.pdf"
               download
-              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:bg-[var(--pg-accent-soft)] hover:text-[var(--pg-accent-ink)]"
+              className="inline-flex min-h-11 items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:bg-[var(--pg-accent-soft)] hover:text-[var(--pg-accent-ink)]"
               style={{ borderColor: "var(--pg-accent)", color: "var(--pg-accent)" }}
             >
               <Download size={17} /> Download CV
             </a>
             <a
               href="mailto:ravikantwaghmare82@gmail.com"
-              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
+              className="inline-flex min-h-11 items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
               style={{ borderColor: "var(--pg-line)", color: "var(--pg-text)" }}
             >
               <Mail size={17} /> Get in touch
@@ -155,7 +155,7 @@ const Hero = () => {
               href="https://github.com/raviw45"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
+              className="inline-flex min-h-11 items-center gap-2 px-5 py-[11px] rounded-lg border text-[14.5px] font-medium transition-colors hover:text-[var(--pg-accent)] hover:border-[var(--pg-accent)]"
               style={{ borderColor: "var(--pg-line)", color: "var(--pg-text)" }}
             >
               GitHub
