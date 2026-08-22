@@ -125,13 +125,13 @@ body {
 @keyframes pg-blob-drift {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(1) rotate(0deg);
   }
   33% {
-    transform: translate(3%, -4%) scale(1.06);
+    transform: translate(3%, -4%) scale(1.06) rotate(18deg);
   }
   66% {
-    transform: translate(-3%, 3%) scale(0.96);
+    transform: translate(-3%, 3%) scale(0.96) rotate(-16deg);
   }
 }
 @keyframes pg-floaty {
@@ -162,10 +162,10 @@ body {
 @keyframes pg-drift {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
   50% {
-    transform: translate3d(3%, -4%, 0) scale(1.08);
+    transform: translate3d(3%, -4%, 0) scale(1.08) rotate(20deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -65,7 +65,15 @@ const AboutMe = () => {
             </div>
           </Reveal>
 
-          <div>
+          <div
+            className="rounded-2xl border p-5 sm:p-7"
+            style={{
+              borderColor: "var(--pg-line)",
+              background: "color-mix(in srgb, var(--pg-surface) 45%, transparent)",
+              backdropFilter: "blur(14px)",
+              boxShadow: "var(--pg-shadow)",
+            }}
+          >
             <Reveal>
               <h2
                 className="font-semibold tracking-[-0.025em] mb-4"

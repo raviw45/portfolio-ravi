@@ -12,20 +12,18 @@ const Skills = () => {
     <section id="skills" className="relative px-[22px] pb-24 overflow-visible">
       <div
         aria-hidden="true"
-        className="absolute -top-10 -left-20 w-[360px] h-[360px] pointer-events-none pg-motion-safe"
+        className="absolute -top-4 -left-8 w-[170px] h-[170px] min-[660px]:-top-8 min-[660px]:-left-14 min-[660px]:w-[260px] min-[660px]:h-[260px] min-[980px]:-top-10 min-[980px]:-left-20 min-[980px]:w-[360px] min-[980px]:h-[360px] pointer-events-none blur-[18px] min-[660px]:blur-[28px] min-[980px]:blur-[40px] pg-motion-safe"
         style={{
           background: "radial-gradient(circle,var(--pg-glow),transparent 70%)",
-          filter: "blur(40px)",
           borderRadius: "44% 56% 62% 38%/48% 42% 58% 52%",
           animation: "pg-blob-drift 16s ease-in-out infinite",
         }}
       />
       <div
         aria-hidden="true"
-        className="absolute -bottom-16 -right-16 w-[300px] h-[300px] pointer-events-none pg-motion-safe"
+        className="absolute -bottom-8 -right-8 w-[150px] h-[150px] min-[660px]:-bottom-12 min-[660px]:-right-12 min-[660px]:w-[220px] min-[660px]:h-[220px] min-[980px]:-bottom-16 min-[980px]:-right-16 min-[980px]:w-[300px] min-[980px]:h-[300px] pointer-events-none blur-[20px] min-[660px]:blur-[32px] min-[980px]:blur-[46px] pg-motion-safe"
         style={{
           background: "radial-gradient(circle,var(--pg-glow),transparent 72%)",
-          filter: "blur(46px)",
           borderRadius: "58% 42% 40% 60%/62% 48% 52% 38%",
           animation: "pg-blob-drift 20s ease-in-out infinite reverse",
         }}
