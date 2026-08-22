@@ -10,10 +10,9 @@ const ExperienceTimeline = () => {
     <section id="experience" className="relative px-[22px] pb-24 overflow-visible">
       <div
         aria-hidden="true"
-        className="absolute top-[10%] -right-24 w-[340px] h-[340px] pointer-events-none pg-motion-safe"
+        className="absolute top-[10%] -right-10 w-[160px] h-[160px] min-[660px]:-right-16 min-[660px]:w-[250px] min-[660px]:h-[250px] min-[980px]:-right-24 min-[980px]:w-[340px] min-[980px]:h-[340px] pointer-events-none blur-[20px] min-[660px]:blur-[32px] min-[980px]:blur-[44px] pg-motion-safe"
         style={{
           background: "radial-gradient(circle,var(--pg-glow),transparent 70%)",
-          filter: "blur(44px)",
           borderRadius: "50% 50% 38% 62%/62% 38% 62% 38%",
           animation: "pg-blob-drift 22s ease-in-out infinite",
         }}

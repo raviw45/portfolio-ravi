@@ -70,10 +70,9 @@ const Hero = () => {
     <section id="top" className="relative pt-[132px] pb-[84px] px-[22px]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div
-          className="absolute -top-40 -right-28 w-[620px] h-[620px] rounded-full pg-motion-safe"
+          className="absolute -top-16 -right-12 w-[280px] h-[280px] min-[660px]:-top-28 min-[660px]:-right-20 min-[660px]:w-[440px] min-[660px]:h-[440px] min-[980px]:-top-40 min-[980px]:-right-28 min-[980px]:w-[620px] min-[980px]:h-[620px] rounded-full blur-[14px] min-[660px]:blur-[22px] min-[980px]:blur-[30px] pg-motion-safe"
           style={{
             background: "radial-gradient(circle, var(--pg-glow), transparent 68%)",
-            filter: "blur(30px)",
             animation: "pg-drift 18s ease-in-out infinite",
           }}
         />

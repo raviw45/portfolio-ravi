@@ -59,8 +59,8 @@ const ContactMe: React.FC = () => {
       >
         <div
           aria-hidden="true"
-          className="absolute -top-36 -left-[90px] w-[420px] h-[420px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle,var(--pg-glow),transparent 70%)", filter: "blur(24px)" }}
+          className="absolute -top-16 -left-10 w-[200px] h-[200px] min-[660px]:-top-24 min-[660px]:-left-16 min-[660px]:w-[300px] min-[660px]:h-[300px] min-[980px]:-top-36 min-[980px]:-left-[90px] min-[980px]:w-[420px] min-[980px]:h-[420px] rounded-full pointer-events-none blur-[12px] min-[660px]:blur-[18px] min-[980px]:blur-[24px] pg-motion-safe"
+          style={{ background: "radial-gradient(circle,var(--pg-glow),transparent 70%)", animation: "pg-drift 18s ease-in-out infinite" }}
         />
         <div className="grid grid-cols-1 min-[980px]:grid-cols-2 gap-11 relative">
           <div>

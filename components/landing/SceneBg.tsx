@@ -217,14 +217,18 @@ export default function SceneBg() {
       markTextures.push(tex);
       return tex;
     };
+    // Badges are sized/placed smaller and kept further from the camera's scroll path
+    // on narrow viewports so they never blow up into an oversized "zoomed" badge —
+    // on a small screen the same world-space size fills far more of the frame.
+    const badgeScale = { xs: 0.55, sm: 0.75, md: 1, lg: 1 }[tier];
     const spawn = (tex: THREE.CanvasTexture) => {
       const per = spritesPerLogo;
       for (let i = 0; i < per; i++) {
         const m = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.95, depthWrite: false, depthTest: false });
         const sp = new THREE.Sprite(m);
-        const scale = 1.5 + Math.random() * 1.1;
+        const scale = (1.1 + Math.random() * 0.7) * badgeScale;
         sp.scale.set(scale, scale, 1);
-        sp.position.set((Math.random() - 0.5) * 90, (Math.random() - 0.5) * 65, -6 - Math.random() * 70);
+        sp.position.set((Math.random() - 0.5) * 90, (Math.random() - 0.5) * 65, -40 - Math.random() * 90);
         marks.add(sp);
         markData.push({ sp, seed: Math.random() * 6.28, amp: 0.9 + Math.random() * 1.6, spin: (Math.random() - 0.5) * 0.2, base: sp.position.clone() });
       }
@@ -237,7 +241,7 @@ export default function SceneBg() {
 
     const grid = new THREE.GridHelper(360, gridDivisions, 0xa99cf0, 0x7b86c9);
     (grid.material as THREE.Material).transparent = true;
-    (grid.material as THREE.Material).opacity = 0.2;
+    (grid.material as THREE.Material).opacity = 0.1;
     (grid.material as THREE.LineBasicMaterial).blending = THREE.AdditiveBlending;
     (grid.material as THREE.Material).depthWrite = false;
     grid.position.set(0, -28, -70);
@@ -250,20 +254,28 @@ export default function SceneBg() {
       if (!aboutEl) return 1;
       const r = aboutEl.getBoundingClientRect();
       const dist = innerHeight - r.top;
+      // Raw 0-1 scroll-distance fraction — callers apply their own ceiling below,
+      // since the fine wireframe lines need to stay much fainter than the
+      // floating tech-badge sprites to avoid fighting with body text.
       return Math.min(1, Math.max(0, dist / 300));
     };
     const applyTheme = () => {
       const light = !document.documentElement.classList.contains("dark");
       const k = light ? 0.55 : 1;
+      // Lines (grid/lattice/rings) stay a faint low-contrast accent past the hero
+      // fold. Badges get their own, higher ceiling — they're a deliberate floating
+      // feature, not background texture, so they should stay clearly visible.
+      const lineFade = Math.min(0.2, fadeAmt);
+      const badgeFade = Math.min(0.7, fadeAmt);
       pm.uniforms.uOpacity.value = base() * (light ? 0.8 : 1.15);
-      (grid.material as THREE.Material).opacity = 0.2 * k;
-      shellAMat.opacity = 0.34 * k * fadeAmt;
-      shellBMat.opacity = 0.2 * k * fadeAmt;
+      (grid.material as THREE.Material).opacity = 0.1 * k;
+      shellAMat.opacity = 0.05 * k * lineFade;
+      shellBMat.opacity = 0.035 * k * lineFade;
       ringMats.forEach((m, i) => {
-        m.opacity = (i === 1 ? 0.34 : 0.26) * k * fadeAmt;
+        m.opacity = (i === 1 ? 0.05 : 0.04) * k * lineFade;
       });
       marks.children.forEach((sp) => {
-        ((sp as THREE.Sprite).material as THREE.SpriteMaterial).opacity = (light ? 0.55 : 0.95) * fadeAmt;
+        ((sp as THREE.Sprite).material as THREE.SpriteMaterial).opacity = (light ? 0.32 : 0.5) * badgeFade;
       });
     };
     const mo = new MutationObserver(applyTheme);
@@ -306,7 +318,7 @@ export default function SceneBg() {
       my += (tmy - my) * 0.09;
       pm.uniforms.uTime.value = t;
 
-      camera.position.z = 20 - cur * 118;
+      camera.position.z = 20 - cur * 85;
       camera.position.x = mx * 11 + Math.sin(t * 0.15) * 1.5;
       camera.position.y = -my * 7 + cur * 12;
       camera.rotation.z = vel * 6;
