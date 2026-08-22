@@ -23,7 +23,10 @@ export default function BlogList() {
       className="py-16 sm:py-24 md:min-h-screen"
     >
       <div className="w-[95%] md:w-[85%] mx-auto max-w-7xl">
-        <h1 className="text-3xl sm:text-4xl text-center font-bold mb-4 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent">
+        <h1
+          className="text-center font-bold mb-4 text-gradient bg-gradient-to-r from-purple-500 to-indigo-600 bg-clip-text text-transparent"
+          style={{ fontSize: "clamp(28px,4.5vw,40px)" }}
+        >
           Latest Tech Blogs
         </h1>
 

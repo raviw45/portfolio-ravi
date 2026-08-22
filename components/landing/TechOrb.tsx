@@ -71,11 +71,19 @@ export default function TechOrb() {
     const host = hostRef.current;
     if (!host) return;
 
+    const maxPixelRatio = innerWidth < 480 ? 1 : innerWidth < 980 ? 1.5 : 2;
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
     camera.position.set(0, 0, 11.5);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, maxPixelRatio));
+    // setSize(w, h, false) below skips Three's own style sync, so the canvas must be
+    // told to fill its host via CSS — otherwise its width/height attributes (already
+    // scaled by devicePixelRatio) become its CSS size too, overflowing its container.
+    renderer.domElement.style.display = "block";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
     renderer.domElement.style.cursor = "grab";
     host.appendChild(renderer.domElement);
 

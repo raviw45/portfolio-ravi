@@ -72,11 +72,11 @@ const ExperienceTimeline = () => {
                     {role.summary}
                   </p>
                   <div
-                    className="flex flex-wrap gap-[26px] py-4 mb-4 border-y"
+                    className="grid grid-cols-1 min-[400px]:grid-cols-2 min-[660px]:grid-cols-4 gap-x-6 gap-y-4 py-4 mb-4 border-y"
                     style={{ borderColor: "var(--pg-line)" }}
                   >
                     {role.metrics.map((m) => (
-                      <div key={m.label} className="flex flex-col gap-0.5 pr-[22px]">
+                      <div key={m.label} className="flex flex-col gap-0.5 min-w-0">
                         <span className="text-[22px] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--pg-accent)]">
                           {m.value}
                         </span>

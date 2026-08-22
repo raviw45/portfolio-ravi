@@ -64,7 +64,7 @@ const Navbar = () => {
               <Link
                 key={item.label}
                 href={getHref(item)}
-                className="transition-colors hover:text-[var(--pg-accent)]"
+                className="flex items-center py-2 transition-colors hover:text-[var(--pg-accent)]"
                 style={{ color: "var(--pg-muted)" }}
               >
                 {item.label}
@@ -78,7 +78,7 @@ const Navbar = () => {
             type="button"
             onClick={() => setIsOpen((v) => !v)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="min-[980px]:hidden flex h-[34px] w-[38px] flex-none items-center justify-center rounded-lg border"
+            className="min-[980px]:hidden flex h-11 w-11 flex-none items-center justify-center rounded-lg border"
             style={{
               borderColor: "var(--pg-line)",
               background: "var(--pg-surface-2)",
@@ -92,7 +92,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="min-[980px]:hidden border-t px-[22px] py-3.5 flex flex-col gap-3.5 text-[15px]"
+          className="min-[980px]:hidden border-t px-[22px] py-2 flex flex-col text-[15px]"
           style={{ borderColor: "var(--pg-line)", background: "var(--pg-bg)" }}
         >
           {NAV_ITEMS.map((item) => (
@@ -100,6 +100,7 @@ const Navbar = () => {
               key={item.label}
               href={getHref(item)}
               onClick={closeMenu}
+              className="flex items-center py-3"
               style={{ color: "var(--pg-text)" }}
             >
               {item.label}
